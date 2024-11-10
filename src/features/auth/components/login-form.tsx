@@ -15,9 +15,9 @@ export function LoginForm() {
   return (
     <Card className="mx-auto max-w-sm">
       <CardHeader>
-        <CardTitle className="text-2xl">Login</CardTitle>
+        <CardTitle className="text-2xl">Bem vindo de volta!</CardTitle>
         <CardDescription>
-          Enter your email below to login to your account
+          Digite o seu email abaixo para entrar na sua conta
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -27,7 +27,7 @@ export function LoginForm() {
             <Input
               id="email"
               type="email"
-              placeholder="m@example.com"
+              placeholder="exemplo@email.com"
               required
             />
           </div>
@@ -35,16 +35,19 @@ export function LoginForm() {
             <div className="flex items-center">
               <Label htmlFor="password">Senha</Label>
             </div>
-            <Input id="password" type="password" placeholder="******" />
+            <Input id="password" type="password" placeholder="********" />
           </div>
           <Button type="submit" className="w-full">
             Login
           </Button>
         </div>
         <div className="mt-4 text-center text-sm">
-          Don&apos;t have an account?{' '}
-          <Link href="#" className="underline">
-            Sign up
+          Novo por aqui?{' '}
+          <Link
+            href="/register"
+            className="underline hover:opacity-80 transition-all"
+          >
+            Cadastre-se
           </Link>
         </div>
       </CardContent>
