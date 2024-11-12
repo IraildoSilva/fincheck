@@ -36,7 +36,7 @@ export function LoginForm() {
     },
   })
 
-  function onSubmit(values: FormData) {
+  async function onSubmit(values: FormData) {
     console.log(values)
   }
 

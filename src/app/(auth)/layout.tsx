@@ -28,3 +28,9 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
     </div>
   )
 }
+
+// TODO
+//   ADD HONO
+//   ADD QUERY CLIENT
+//   ADD PRISMA
+//   CREATE AUTH ROUTE
