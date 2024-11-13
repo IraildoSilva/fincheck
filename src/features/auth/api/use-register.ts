@@ -32,8 +32,7 @@ export function useRegister() {
     },
     onError: () => {
       toast.error('Falha ao cadastrar', {
-        description:
-          'Pedimos desculpas pelo transtorno, tente novamente mais tarde.',
+        description: 'Pedimos desculpas, tente novamente mais tarde.',
       })
     },
   })
