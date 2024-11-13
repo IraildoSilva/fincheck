@@ -4,7 +4,7 @@ import { handle } from 'hono/vercel'
 
 import auth from '@/features/auth/server/route'
 
-export const runtime = 'edge'
+export const runtime = 'nodejs'
 
 const app = new Hono().basePath('/api')
 
