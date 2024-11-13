@@ -24,10 +24,13 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import { useLogin } from '../api/use-login'
 
 type FormData = z.infer<typeof frontendLoginSchema>
 
 export function LoginForm() {
+  const { mutate, isPending } = useLogin()
+
   const form = useForm<FormData>({
     resolver: zodResolver(frontendLoginSchema),
     defaultValues: {
@@ -37,7 +40,7 @@ export function LoginForm() {
   })
 
   async function onSubmit(values: FormData) {
-    console.log(values)
+    mutate({ json: values })
   }
 
   return (
@@ -64,6 +67,7 @@ export function LoginForm() {
                           type="email"
                           placeholder="exemplo@email.com"
                           {...field}
+                          disabled={isPending}
                         />
                       </FormControl>
                       <FormMessage />
@@ -83,6 +87,7 @@ export function LoginForm() {
                           type="password"
                           placeholder="********"
                           {...field}
+                          disabled={isPending}
                         />
                       </FormControl>
                       <FormMessage />
@@ -90,8 +95,8 @@ export function LoginForm() {
                   )}
                 />
               </div>
-              <Button type="submit" className="w-full">
-                Login
+              <Button type="submit" className="w-full" disabled={isPending}>
+                Entrar
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">

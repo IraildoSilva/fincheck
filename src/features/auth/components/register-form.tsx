@@ -24,10 +24,13 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import { useRegister } from '../api/use-register'
 
 type FormData = z.infer<typeof frontendRegisterSchema>
 
 export function RegisterForm() {
+  const { mutate, isPending } = useRegister()
+
   const form = useForm<FormData>({
     resolver: zodResolver(frontendRegisterSchema),
     defaultValues: {
@@ -37,7 +40,7 @@ export function RegisterForm() {
   })
 
   function onSubmit(values: FormData) {
-    console.log(values)
+    mutate({ json: values })
   }
 
   return (
@@ -73,7 +76,11 @@ export function RegisterForm() {
                     <FormItem>
                       <FormLabel>Nome</FormLabel>
                       <FormControl>
-                        <Input placeholder="Nome" {...field} />
+                        <Input
+                          placeholder="Nome"
+                          {...field}
+                          disabled={isPending}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -92,6 +99,7 @@ export function RegisterForm() {
                           type="email"
                           placeholder="exemplo@email.com"
                           {...field}
+                          disabled={isPending}
                         />
                       </FormControl>
                       <FormMessage />
@@ -111,6 +119,7 @@ export function RegisterForm() {
                           type="password"
                           placeholder="********"
                           {...field}
+                          disabled={isPending}
                         />
                       </FormControl>
                       <FormMessage />
@@ -118,7 +127,7 @@ export function RegisterForm() {
                   )}
                 />
               </div>
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full" disabled={isPending}>
                 Criar conta
               </Button>
             </div>
