@@ -67,3 +67,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+.stroke-light {
+  stroke: #0a090a;
+}
+.stroke-dark {
+  stroke: #f9f9f9;
+}

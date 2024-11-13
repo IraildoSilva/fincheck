@@ -1,5 +1,6 @@
 import { Logo } from '@/components/logo'
 import { ToggleTheme } from '@/components/toggle-theme'
+import { BankAccounts } from '@/features/bank-accounts/components/bank-accounts'
 
 export default function Dashboard() {
   return (
@@ -12,7 +13,7 @@ export default function Dashboard() {
 
       <main className="flex-1 flex flex-col lg:flex-row gap-4 lg:pr-4 max-h-[calc(100%-64px)]">
         <div className="w-full h-full lg:w-1/2">
-          {/* Bank Accounts */}
+          <BankAccounts />
         </div>
         <div className='w-full h-full lg:w-1/2'>
           {/* Transactions */}
