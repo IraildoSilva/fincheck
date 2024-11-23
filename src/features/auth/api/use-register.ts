@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { sleep } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
+import { QUERY_KEYS } from '../constants'
 
 type Route = typeof client.api.auth.register.$post
 
@@ -27,7 +28,7 @@ export function useRegister() {
       return await response.json()
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['me'] })
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.current })
       router.push('/')
     },
     onError: () => {
