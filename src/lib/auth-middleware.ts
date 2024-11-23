@@ -24,8 +24,6 @@ export const authMiddleware = createMiddleware<AdditionalContext>(
 
     const { sub: userId } = await verify(accessToken, env.JWT_SECRET)
 
-    console.log(userId)
-
     const user = await prisma.user.findUnique({
       where: { id: userId as string },
       select: { email: true, id: true, name: true },
