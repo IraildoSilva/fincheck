@@ -15,9 +15,7 @@ export default function Dashboard() {
         <div className="w-full h-full lg:w-1/2">
           <BankAccounts />
         </div>
-        <div className='w-full h-full lg:w-1/2'>
-          {/* Transactions */}
-        </div>
+        <div className="w-full h-full lg:w-1/2">{/* Transactions */}</div>
       </main>
     </div>
   )

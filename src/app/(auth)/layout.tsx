@@ -1,16 +1,22 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { Logo } from '@/components/logo'
 import { Button } from '@/components/ui/button'
+import { useCurrent } from '@/features/auth/api/use-current'
 
 interface AuthLayoutProps {
   children: React.ReactNode
 }
 
 export default function AuthLayout({ children }: AuthLayoutProps) {
+  const { data: user } = useCurrent()
+  const router = useRouter()
+
+  if (user) router.push('/')
+
   const pathname = usePathname()
   const isLogin = pathname === '/login'
 
@@ -28,9 +34,3 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
     </div>
   )
 }
-
-// TODO
-//   ADD HONO
-//   ADD QUERY CLIENT
-//   ADD PRISMA
-//   CREATE AUTH ROUTE
