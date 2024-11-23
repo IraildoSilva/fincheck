@@ -5,7 +5,7 @@ import { apiLoginSchema, apiRegisterSchema } from '../schemas'
 import prisma from '@/lib/db'
 import { compare, hash } from 'bcryptjs'
 import { env } from '@/lib/config'
-import { setCookie } from 'hono/cookie'
+import { deleteCookie, setCookie } from 'hono/cookie'
 import { AUTH_COOKIE } from '../constants'
 import { authMiddleware } from '@/lib/auth-middleware'
 
@@ -104,6 +104,11 @@ const app = new Hono()
       sameSite: 'strict',
       maxAge: 60 * 60 * 24 * 7, //7d
     })
+
+    return c.json({ success: true })
+  })
+  .post('/logout', (c) => {
+    deleteCookie(c, AUTH_COOKIE)
 
     return c.json({ success: true })
   })
