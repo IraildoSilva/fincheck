@@ -1,8 +1,8 @@
 'use client'
 
-import { EyeIcon } from '@/components/icons/eye-icon'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { EyeClosed, EyeIcon } from 'lucide-react'
 import { useState } from 'react'
 
 export function BankAccounts() {
@@ -18,7 +18,12 @@ export function BankAccounts() {
         <span className="tracking-[-0.5px] block">Saldo total</span>
 
         <div className="flex items-center gap-2">
-          <strong className={cn('text-[32px] tracking-[-1px]')}>
+          <strong
+            className={cn(
+              'text-[32px] tracking-[-1px] transition-all',
+              !open && 'blur-md'
+            )}
+          >
             R$ 110,00
           </strong>
 
@@ -26,9 +31,10 @@ export function BankAccounts() {
             variant={'ghost'}
             onClick={handleClick}
             size={'icon'}
-            className="[&_svg]:size-7"
+            className="[&_svg]:size-5"
           >
-            <EyeIcon open={open}/>
+            {open && <EyeIcon />}
+            {!open && <EyeClosed />}
           </Button>
         </div>
       </div>
