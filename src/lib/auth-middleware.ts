@@ -10,7 +10,7 @@ import { User } from '@prisma/client'
 
 type AdditionalContext = {
   Variables: {
-    user: User
+    user: Omit<User, 'password'>
   }
 }
 
@@ -28,6 +28,7 @@ export const authMiddleware = createMiddleware<AdditionalContext>(
 
     const user = await prisma.user.findUnique({
       where: { id: userId as string },
+      select: { email: true, id: true, name: true },
     })
 
     if (!user) {
