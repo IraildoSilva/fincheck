@@ -17,7 +17,7 @@ export function useRegister() {
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ json }) => {
-      await sleep(2000)
+      await sleep(300)
 
       const response = await client.api.auth.register.$post({ json })
 
