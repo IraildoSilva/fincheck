@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { Logo } from '@/components/logo'
 import { Button } from '@/components/ui/button'
 import { useCurrent } from '@/features/auth/api/use-current'
+import { useEffect } from 'react'
 
 interface AuthLayoutProps {
   children: React.ReactNode
@@ -15,7 +16,9 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
   const { data: user } = useCurrent()
   const router = useRouter()
 
-  if (user) router.push('/')
+  useEffect(() => {
+    if (user) router.push('/')
+  }, [user, router])
 
   const pathname = usePathname()
   const isLogin = pathname === '/login'

@@ -3,7 +3,7 @@
 import { useCurrent } from '@/features/auth/api/use-current'
 import { User } from '@prisma/client'
 import { useRouter } from 'next/navigation'
-import { createContext } from 'react'
+import { createContext, useEffect } from 'react'
 
 interface ICreateContext {
   user: Omit<User, 'password'>
@@ -20,13 +20,15 @@ export function UserContextProvider({
   const { data: user, isFetching } = useCurrent()
   const router = useRouter()
 
-  if (!user) {
-    router.push('/login')
-    return
-  }
+  useEffect(() => {
+    if (!user) {
+      router.push('/login')
+      return
+    }
+  }, [router, user])
 
   return (
-    <UserContext.Provider value={{ user, isLoading: isFetching }}>
+    <UserContext.Provider value={{ user: user!, isLoading: isFetching }}>
       {!isFetching && children}
     </UserContext.Provider>
   )
