@@ -28,7 +28,7 @@ export function useLogout() {
       toast.success('Saindo da sua conta', {
         description: 'Até breve!',
       })
-      router.refresh()
+      router.push('/login')
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.current })
     },
     onError: () => {
