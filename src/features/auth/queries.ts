@@ -38,8 +38,6 @@ export async function auth(): Promise<null | User> {
 
     if (!user) return null
 
-    console.log('auth')
-
     return user
   } catch {
     return null
