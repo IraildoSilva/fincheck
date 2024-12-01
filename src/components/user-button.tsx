@@ -1,7 +1,8 @@
+'use client'
+
 import { useTheme } from 'next-themes'
 
 import { Loader2, LogOutIcon } from 'lucide-react'
-
 
 import { Avatar, AvatarFallback } from './ui/avatar'
 import {
@@ -20,20 +21,21 @@ import { useLogout } from '@/features/auth/api/use-logout'
 import { User } from '@/entities/User'
 
 interface UserButtonProps {
-  isLoading: boolean
-  avatar?: string
+  isLoading?: boolean
   user: User
 }
 
-export function UserButton({ isLoading, avatar, user }: UserButtonProps) {
+export function UserButton({ isLoading, user }: UserButtonProps) {
   const { setTheme } = useTheme()
   const { mutate: handleLogout } = useLogout()
+
+  const avatar = user?.name.slice(0, 2).toUpperCase()
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar>
-          <AvatarFallback className="cursor-pointer">
+          <AvatarFallback className="cursor-pointer text-sm font-medium tracking-[-0.5px]">
             {!isLoading && avatar}
             {isLoading && <Loader2 className="animate-spin size-5" />}
           </AvatarFallback>
@@ -43,7 +45,7 @@ export function UserButton({ isLoading, avatar, user }: UserButtonProps) {
         <DropdownMenuLabel className="px-5">
           <div className="flex gap-4 items-center">
             <Avatar className="bg-zinc-500/25 w-10 h-10 rounded-full flex items-center justify-center cursor-default">
-              <AvatarFallback className="font-medium text-sm tracking-[-0.5px] bg-transparent">
+              <AvatarFallback className="font-medium text-sm tracking-[-0.5px]">
                 {avatar}
               </AvatarFallback>
             </Avatar>

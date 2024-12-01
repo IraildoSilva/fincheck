@@ -1,24 +1,18 @@
-'use client'
-
-import { useRouter } from 'next/navigation'
-
 import { Logo } from '@/components/logo'
-import { useCurrent } from '@/features/auth/api/use-current'
-import { useEffect } from 'react'
 import RedirectButton from '@/components/redirect-button'
+import { auth } from '@/features/auth/queries'
+import { redirect } from 'next/navigation'
 
 interface AuthLayoutProps {
   children: React.ReactNode
 }
 
-export default function AuthLayout({ children }: AuthLayoutProps) {
-  const { data: user } = useCurrent()
-  const router = useRouter()
+export default async function AuthLayout({ children }: AuthLayoutProps) {
+  const user = await auth()
 
-  useEffect(() => {
-    if (user) router.push('/')
-  }, [user, router])
-
+  if (user) {
+    redirect('/')
+  }
   return (
     <div className="w-full h-screen">
       <header className="fixed h-[80px] w-full flex justify-between items-center px-7">
