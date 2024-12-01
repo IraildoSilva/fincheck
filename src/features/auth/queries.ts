@@ -39,7 +39,8 @@ export async function auth(): Promise<null | User> {
     if (!user) return null
 
     return user
-  } catch {
+  } catch (error) {
+    console.error('Erro no Prisma:', error)
     return null
   }
 }
