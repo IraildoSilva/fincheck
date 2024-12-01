@@ -1,12 +1,12 @@
 'use client'
 
+import { User } from '@/entities/User'
 import { useCurrent } from '@/features/auth/api/use-current'
-import { User } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import { createContext, useEffect } from 'react'
 
 interface ICreateContext {
-  user: Omit<User, 'password'>
+  user: User
   isLoading: boolean
 }
 

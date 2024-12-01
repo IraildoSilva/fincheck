@@ -2,7 +2,6 @@ import { useTheme } from 'next-themes'
 
 import { Loader2, LogOutIcon } from 'lucide-react'
 
-import { User } from '@prisma/client'
 
 import { Avatar, AvatarFallback } from './ui/avatar'
 import {
@@ -18,11 +17,12 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 import { useLogout } from '@/features/auth/api/use-logout'
+import { User } from '@/entities/User'
 
 interface UserButtonProps {
   isLoading: boolean
   avatar?: string
-  user: Omit<User, 'password'>
+  user: User
 }
 
 export function UserButton({ isLoading, avatar, user }: UserButtonProps) {

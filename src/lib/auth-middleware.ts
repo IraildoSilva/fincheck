@@ -6,11 +6,11 @@ import { createMiddleware } from 'hono/factory'
 import { verify } from 'hono/jwt'
 import { env } from '@/lib/config'
 import prisma from './db'
-import { User } from '@prisma/client'
+import { User } from '@/entities/User'
 
 type AdditionalContext = {
   Variables: {
-    user: Omit<User, 'password'>
+    user: User
   }
 }
 
