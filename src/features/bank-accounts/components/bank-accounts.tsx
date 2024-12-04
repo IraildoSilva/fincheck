@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { EyeClosed, EyeIcon } from 'lucide-react'
 import { useState } from 'react'
+import { useGetBankAccounts } from '../api/use-get-bank-accounts'
 
 export function BankAccounts() {
   const [open, setOpen] = useState(true)
@@ -11,6 +12,8 @@ export function BankAccounts() {
   function handleClick() {
     setOpen((prev) => !prev)
   }
+
+  const { data } = useGetBankAccounts()
 
   return (
     <div className="rounded-md h-full w-full px-4 py-8 lg:p-10 flex flex-col bg-zinc-100/60 dark:bg-zinc-900/60 border border-gray-200/60 dark:border-muted  ">
@@ -38,6 +41,8 @@ export function BankAccounts() {
           </Button>
         </div>
       </div>
+
+      <div>{JSON.stringify(data)}</div>
     </div>
   )
 }
