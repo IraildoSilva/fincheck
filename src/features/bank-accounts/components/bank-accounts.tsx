@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
 import { EyeClosed, EyeIcon, Loader2, PlusIcon } from 'lucide-react'
 
 import { useGetBankAccounts } from '@/features/bank-accounts/api/use-get-bank-accounts'
@@ -39,7 +40,7 @@ export function BankAccounts() {
   }
 
   return (
-    <div className="rounded-md h-full w-full px-4 py-8 lg:p-5 flex flex-col bg-zinc-100/60 dark:bg-zinc-900/60 border border-gray-200/60 dark:border-muted  ">
+    <div className="rounded-md min-h-full w-full px-4 py-8 lg:p-5 flex flex-col bg-zinc-100/60 dark:bg-zinc-900/60 border border-gray-200/60 dark:border-muted  ">
       {isFetching && (
         <div className="w-full h-full flex items-center justify-center">
           <Loader2 className="text-primary  w-10 h-10 animate-spin" />
@@ -55,7 +56,7 @@ export function BankAccounts() {
               <strong
                 className={cn(
                   'text-[32px] tracking-[-1px] transition-all',
-                  !open && 'blur-md'
+                  !areValuesVisible && 'blur-md'
                 )}
               >
                 {formatCurrency(currentBalance!)}
@@ -84,7 +85,7 @@ export function BankAccounts() {
 
                 <button
                   // onClick={openNewAccountModal}
-                  className="mt-4 h-52 border-2 border-zinc-200 dark:border-zinc-700 rounded-2xl border-dashed flex flex-col items-center justify-center gap-4 text-white"
+                  className="mt-1 h-52 border-2 border-zinc-200 dark:border-zinc-700 rounded-md border-dashed flex flex-col items-center justify-center gap-4 text-white"
                 >
                   <div className="w-11 h-11 rounded-full border-dashed border-2 border-muted-foreground flex items-center justify-center">
                     <PlusIcon className="w-6 h-6 text-foreground" />
@@ -100,6 +101,7 @@ export function BankAccounts() {
             {accounts.length > 0 && (
               <div>
                 <Swiper
+                  direction="horizontal"
                   spaceBetween={windowWidth! > 500 ? 16 : 8}
                   slidesPerView={windowWidth! > 500 ? 2.2 : 1.1}
                   onSlideChange={(swiper) => {

@@ -30,7 +30,7 @@ export function AccountCard({ data, areValueVisible }: AccountCardProps) {
         <div className="">
           <span
             className={cn(
-              ' font-medium tracking-[-0.5px] block',
+              'font-medium tracking-[-0.5px] block',
               !areValueVisible && 'blur-sm'
             )}
           >

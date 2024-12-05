@@ -1,5 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
 import { useSwiper } from 'swiper/react'
+import { Button } from './ui/button'
 
 interface SliderNavigationProps {
   isBeginning: boolean
@@ -14,21 +15,25 @@ export function SliderNavigation({
 
   return (
     <div className="">
-      <button
+      <Button
+        variant={'ghost'}
+        size={'icon'}
         onClick={() => swiper.slidePrev()}
         disabled={isBeginning}
-        className="rounded-full p-3 enabled:hover:bg-black/10 transition ease-in duration-150 disabled:opacity-40"
+        className="rounded-full p-6  transition ease-in duration-150 disabled:opacity-40 [&_svg]:size-6"
       >
-        <ChevronLeftIcon className="text-white w-6 h-6" />
-      </button>
+        <ChevronLeftIcon />
+      </Button>
 
-      <button
+      <Button
+        variant={'ghost'}
+        size={'icon'}
         onClick={() => swiper.slideNext()}
         disabled={isEnd}
-        className="rounded-full p-3 enabled:hover:bg-black/10 transition ease-in duration-150 disabled:opacity-40 "
+        className="rounded-full p-6 transition ease-in duration-150 disabled:opacity-40 [&_svg]:size-6"
       >
-        <ChevronRightIcon className="text-white w-6 h-6" />
-      </button>
+        <ChevronRightIcon />
+      </Button>
     </div>
   )
 }
