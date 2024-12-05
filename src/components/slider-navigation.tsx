@@ -20,7 +20,7 @@ export function SliderNavigation({
         size={'icon'}
         onClick={() => swiper.slidePrev()}
         disabled={isBeginning}
-        className="rounded-full p-6  transition ease-in duration-150 disabled:opacity-40 [&_svg]:size-6"
+        className="rounded-full p-5 transition ease-in duration-150 disabled:opacity-40 [&_svg]:size-5"
       >
         <ChevronLeftIcon />
       </Button>
@@ -30,7 +30,7 @@ export function SliderNavigation({
         size={'icon'}
         onClick={() => swiper.slideNext()}
         disabled={isEnd}
-        className="rounded-full p-6 transition ease-in duration-150 disabled:opacity-40 [&_svg]:size-6"
+        className="rounded-full p-5 transition ease-in duration-150 disabled:opacity-40 [&_svg]:size-5"
       >
         <ChevronRightIcon />
       </Button>
