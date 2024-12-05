@@ -1,19 +1,22 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
-import { EyeClosed, EyeIcon, Loader2, PlusIcon } from 'lucide-react'
 import { useMemo, useState } from 'react'
-import { useGetBankAccounts } from '../api/use-get-bank-accounts'
-
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { EyeClosed, EyeIcon, Loader2, PlusIcon } from 'lucide-react'
+
+import { useGetBankAccounts } from '@/features/bank-accounts/api/use-get-bank-accounts'
+
+import { Button } from '@/components/ui/button'
 import { SliderNavigation } from '@/components/slider-navigation'
-import { useWindowWidth } from '@/hooks/use-window-width'
 import { AccountCard } from './account-card'
+
+import { cn } from '@/lib/utils'
+import { useWindowWidth } from '@/hooks/use-window-width'
+import { formatCurrency } from '@/lib/formatCurrency'
 
 export function BankAccounts() {
   const windowWidth = useWindowWidth()
-  const [open, setOpen] = useState(true)
+  const [areValuesVisible, setAreValuesVisible] = useState(true)
   const [sliderState, setSliderState] = useState({
     isBeginning: true,
     isEnd: false,
@@ -28,7 +31,7 @@ export function BankAccounts() {
   }, [accounts])
 
   function handleClick() {
-    setOpen((prev) => !prev)
+    setAreValuesVisible((prev) => !prev)
   }
 
   if (!accounts) {
@@ -55,7 +58,7 @@ export function BankAccounts() {
                   !open && 'blur-md'
                 )}
               >
-                {currentBalance}
+                {formatCurrency(currentBalance!)}
               </strong>
 
               <Button
@@ -64,8 +67,8 @@ export function BankAccounts() {
                 size={'icon'}
                 className="[&_svg]:size-5"
               >
-                {open && <EyeIcon />}
-                {!open && <EyeClosed />}
+                {areValuesVisible && <EyeIcon />}
+                {!areValuesVisible && <EyeClosed />}
               </Button>
             </div>
           </div>
@@ -122,7 +125,10 @@ export function BankAccounts() {
 
                   {accounts.map((account) => (
                     <SwiperSlide key={account.id}>
-                      <AccountCard data={account} />
+                      <AccountCard
+                        data={account}
+                        areValueVisible={areValuesVisible}
+                      />
                     </SwiperSlide>
                   ))}
                 </Swiper>
