@@ -3,7 +3,6 @@ import { client } from '@/lib/rpc'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { sleep } from '@/lib/utils'
 import { QUERY_KEYS } from '../constants'
 
 type Route = typeof client.api.auth.login.$post
@@ -17,8 +16,6 @@ export function useLogin() {
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ json }) => {
-      await sleep(300)
-
       const response = await client.api.auth.login.$post({ json })
 
       if (!response.ok) {
