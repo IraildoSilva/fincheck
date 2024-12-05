@@ -5,12 +5,10 @@ import { getCookie } from 'hono/cookie'
 import { createMiddleware } from 'hono/factory'
 import { verify } from 'hono/jwt'
 import { env } from '@/lib/config'
-import prisma from './db'
-import { User } from '@/entities/User'
 
 type AdditionalContext = {
   Variables: {
-    user: User
+    userId: string
   }
 }
 
@@ -19,21 +17,22 @@ export const authMiddleware = createMiddleware<AdditionalContext>(
     const accessToken = getCookie(c, AUTH_COOKIE)
 
     if (!accessToken) {
-      return c.json({ error: 'Unauthorized' }, 401)
+      return c.json(
+        { error: 'Unauthorized', message: 'Missing Access Token' },
+        401
+      )
     }
 
     const { sub: userId } = await verify(accessToken, env.JWT_SECRET)
 
-    const user = await prisma.user.findUnique({
-      where: { id: userId as string },
-      select: { email: true, id: true, name: true },
-    })
-
-    if (!user) {
-      return c.json({ error: 'User not found' }, 404)
+    if (!userId) {
+      return c.json(
+        { error: 'Unauthorized', message: 'Invalid Access Token' },
+        401
+      )
     }
 
-    c.set('user', user)
+    c.set('userId', userId as string)
 
     await next()
   }
