@@ -39,7 +39,7 @@ export function BankAccounts() {
   }
 
   return (
-    <div className="rounded-md h-full w-full px-4 py-8 lg:p-10 flex flex-col bg-zinc-100/60 dark:bg-zinc-900/60 border border-gray-200/60 dark:border-muted  ">
+    <div className="rounded-md h-full w-full px-4 py-8 lg:p-5 flex flex-col bg-zinc-100/60 dark:bg-zinc-900/60 border border-gray-200/60 dark:border-muted  ">
       {isFetching && (
         <div className="w-full h-full flex items-center justify-center">
           <Loader2 className="text-primary  w-10 h-10 animate-spin" />
@@ -77,20 +77,20 @@ export function BankAccounts() {
             {accounts.length === 0 && (
               <>
                 <div className="mb-4">
-                  <strong className="tracking-[-1px] text-white text-lg font-bold">
+                  <strong className="tracking-[-1px] text-lg font-bold">
                     Minhas contas
                   </strong>
                 </div>
 
                 <button
                   // onClick={openNewAccountModal}
-                  className="mt-4 h-52 border-2 border-teal-600 rounded-2xl border-dashed flex flex-col items-center justify-center gap-4 text-white"
+                  className="mt-4 h-52 border-2 border-zinc-200 dark:border-zinc-700 rounded-2xl border-dashed flex flex-col items-center justify-center gap-4 text-white"
                 >
-                  <div className="w-11 h-11 rounded-full border-dashed border-2 flex items-center justify-center">
-                    <PlusIcon className="w-6 h-6" />
+                  <div className="w-11 h-11 rounded-full border-dashed border-2 border-muted-foreground flex items-center justify-center">
+                    <PlusIcon className="w-6 h-6 text-foreground" />
                   </div>
 
-                  <span className="font-medium tracking-[-0.5px] block text-center w-32">
+                  <span className="font-medium tracking-[-0.5px] block text-center w-32 text-muted-foreground">
                     Cadastre uma nova conta
                   </span>
                 </button>
