@@ -25,6 +25,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { useRegister } from '../api/use-register'
+import { Loader2 } from 'lucide-react'
 
 type FormData = z.infer<typeof frontendRegisterSchema>
 
@@ -128,7 +129,8 @@ export function RegisterForm() {
                 />
               </div>
               <Button type="submit" className="w-full" disabled={isPending}>
-                Criar conta
+                {!isPending && 'Criar conta'}
+                {isPending && <Loader2 className="animate-spin" />}
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
