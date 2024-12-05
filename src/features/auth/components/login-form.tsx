@@ -25,6 +25,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { useLogin } from '../api/use-login'
+import { Loader2 } from 'lucide-react'
 
 type FormData = z.infer<typeof frontendLoginSchema>
 
@@ -96,7 +97,8 @@ export function LoginForm() {
                 />
               </div>
               <Button type="submit" className="w-full" disabled={isPending}>
-                Entrar
+                {!isPending && 'Entrar'}
+                {isPending && <Loader2 className="animate-spin" />}
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
