@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 import { BankAccount } from '@/entities/BankAccount'
-import { BankAccountTypeIcon } from '@/components/icons/bank-account-type-icon'
+import { BankAccountTypeIcon } from './bank-account-type-icon'
 import { formatCurrency } from '@/lib/format-currency'
 
 interface AccountCardProps {
