@@ -6,11 +6,11 @@ import { filtersSchema } from '../schemas'
 
 const app = new Hono().get(
   '/',
-  zValidator('param', filtersSchema),
+  zValidator('query', filtersSchema),
   authMiddleware,
   async (c) => {
     const userId = c.get('userId')
-    const { month, year, bankAccountId, type } = c.req.valid('param')
+    const { month, year, bankAccountId, type } = c.req.valid('query')
 
     const transactions = await prisma.transaction.findMany({
       where: {
