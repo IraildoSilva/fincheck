@@ -170,7 +170,7 @@ export function Transactions() {
                           </span>
                         </div>
                         <div className="flex flex-col text-gray-600">
-                          <span className="text-sm leading-1">
+                          <span className="text-xs leading-1">
                             {transaction.category?.name}
                           </span>
                           <span className="text-xs leading-none">
