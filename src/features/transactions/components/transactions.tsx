@@ -10,6 +10,7 @@ import { SliderOption } from './slider-option'
 import { CategoryIcon } from './categories/category-icon'
 import { formatDate } from '@/lib/format-date'
 import { SliderNavigation } from './slider-navigation'
+import { TransactionTypeDropdown } from './transactions-type-drowdown'
 
 export function Transactions() {
   const {
@@ -60,13 +61,13 @@ export function Transactions() {
           )} */}
 
           <header>
-            {/* <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center">
               <TransactionTypeDropdown
                 onSelect={handleChangeFilters('type')}
                 selectedType={filters.type}
               />
 
-              <div className="flex gap-6">
+              {/* <div className="flex gap-6">
                 <SummaryButton
                   onClick={handleOpenSummaryModal}
                   disabled={!hasTransactions}
@@ -75,8 +76,8 @@ export function Transactions() {
                 <button onClick={handleOpenFiltersModal}>
                   <FilterIcon />
                 </button>
-              </div>
-            </div> */}
+              </div> */}
+            </div>
 
             <div className="mt-6 relative">
               <Swiper
