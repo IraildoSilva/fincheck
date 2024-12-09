@@ -18,8 +18,8 @@ const app = new Hono().get(
         bankAccountId,
         type,
         date: {
-          gte: new Date(Date.UTC(year, month)),
-          lt: new Date(Date.UTC(year, month + 1)),
+          gte: new Date(Date.UTC(Number(year), Number(month))),
+          lt: new Date(Date.UTC(Number(year), Number(month) + 1)),
         },
       },
       include: {
