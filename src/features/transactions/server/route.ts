@@ -23,6 +23,12 @@ const app = new Hono().get(
         },
       },
       include: {
+        bankAccount: {
+          select: {
+            name: true,
+            color: true,
+          },
+        },
         category: {
           select: {
             id: true,

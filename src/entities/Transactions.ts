@@ -6,6 +6,10 @@ export interface Transaction {
   type: 'INCOME' | 'EXPENSE'
   categoryId: string | null
   bankAccountId: string
+  bankAccount: {
+    name: string
+    color: string
+  }
   category?: {
     id: string
     name: string
