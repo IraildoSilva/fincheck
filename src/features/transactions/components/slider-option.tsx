@@ -16,7 +16,7 @@ export function SliderOption({ isActive, month, index }: SliderOptionProps) {
       role="button"
       className={cn(
         'flex items-center justify-center w-full rounded-full h-12 text-sm tracking-[-0.5px] text-gray-800 font-medium',
-        isActive && 'bg-white'
+        isActive && 'bg-muted'
       )}
     >
       {month}
