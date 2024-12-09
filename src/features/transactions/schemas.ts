@@ -6,5 +6,3 @@ export const filtersSchema = z.object({
   bankAccountId: z.string().uuid().optional(),
   type: z.enum(['INCOME', 'EXPENSE']).optional(),
 })
-
-export type TransactionsFilters = z.infer<typeof filtersSchema>
