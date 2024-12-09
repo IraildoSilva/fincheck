@@ -10,7 +10,6 @@ export function useGetTransactions(filters: TransactionsFilters) {
     month: filters.month.toString(),
   }
 
-  console.log({ parsedFilters })
   const query = useQuery({
     queryKey: QUERY_KEYS.transactions,
     queryFn: async () => {
