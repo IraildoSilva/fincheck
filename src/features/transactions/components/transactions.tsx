@@ -2,7 +2,7 @@
 
 import { formatCurrency } from '@/lib/format-currency'
 import { cn } from '@/lib/utils'
-import { Loader2 } from 'lucide-react'
+import { FilterIcon, Loader2 } from 'lucide-react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { useTransactions } from './use-transactions'
 import { MONTHS } from '../constants'
@@ -11,6 +11,7 @@ import { CategoryIcon } from './categories/category-icon'
 import { formatDate } from '@/lib/format-date'
 import { SliderNavigation } from './slider-navigation'
 import { TransactionTypeDropdown } from './transactions-type-drowdown'
+import { FiltersModal } from './filters-modal'
 
 export function Transactions() {
   const {
@@ -20,12 +21,12 @@ export function Transactions() {
     isInitialLoading,
     transactions,
     isLoading,
-    // isFiltersModalOpen,
-    // handleCloseFiltersModal,
-    // handleOpenFiltersModal,
+    isFiltersModalOpen,
+    handleCloseFiltersModal,
+    handleOpenFiltersModal,
     handleChangeFilters,
     filters,
-    // handleApplyFilters,
+    handleApplyFilters,
     handleOpenEditModal,
     // handleCloseEditModal,
     // isEditModalOpen,
@@ -46,13 +47,13 @@ export function Transactions() {
 
       {!isInitialLoading && (
         <>
-          {/* <FiltersModal
+          <FiltersModal
             onApplyFilters={handleApplyFilters}
             open={isFiltersModalOpen}
             onClose={handleCloseFiltersModal}
           />
 
-          {hasTransactions && (
+          {/* {hasTransactions && (
             <SummaryModal
               open={isSummaryModalOpen}
               onClose={handleCloseSummaryModal}
@@ -67,16 +68,16 @@ export function Transactions() {
                 selectedType={filters.type}
               />
 
-              {/* <div className="flex gap-6">
-                <SummaryButton
+              <div className="flex gap-6">
+                {/* <SummaryButton
                   onClick={handleOpenSummaryModal}
                   disabled={!hasTransactions}
-                />
+                /> */}
 
                 <button onClick={handleOpenFiltersModal}>
                   <FilterIcon />
                 </button>
-              </div> */}
+              </div>
             </div>
 
             <div className="mt-6 relative">
