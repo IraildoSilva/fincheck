@@ -4,15 +4,18 @@ import { client } from '@/lib/rpc'
 import { TransactionsFilters } from '../components/use-transactions'
 
 export function useGetTransactions(filters: TransactionsFilters) {
+  const parsedFilters = {
+    ...filters,
+    year: filters.year.toString(),
+    month: filters.month.toString(),
+  }
+
+  console.log({ parsedFilters })
   const query = useQuery({
     queryKey: QUERY_KEYS.transactions,
     queryFn: async () => {
       const response = await client.api.transactions.$get({
-        param: {
-          ...filters,
-          year: filters.year.toString(),
-          month: filters.month.toString(),
-        },
+        query: parsedFilters,
       })
 
       if (!response.ok) {

@@ -4,11 +4,11 @@ export interface Transaction {
   value: number
   date: string
   type: 'INCOME' | 'EXPENSE'
-  categoryId: string
+  categoryId: string | null
   bankAccountId: string
   category?: {
     id: string
     name: string
     icon: string
-  }
+  } | null
 }

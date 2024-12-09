@@ -1,8 +1,10 @@
+
 import { Logo } from '@/components/logo'
 import { BankAccounts } from '@/features/bank-accounts/components/bank-accounts'
 import { UserButton } from '@/components/user-button'
 import { auth } from '@/features/auth/queries'
 import { redirect } from 'next/navigation'
+import { Transactions } from '@/features/transactions/components/transactions'
 
 export default async function Dashboard() {
   const user = await auth()
@@ -24,7 +26,7 @@ export default async function Dashboard() {
           <BankAccounts />
         </div>
         <div className="w-full lg:min-h-full lg:w-1/2">
-          {/* Transactions */}
+          <Transactions />
         </div>
       </main>
     </div>
