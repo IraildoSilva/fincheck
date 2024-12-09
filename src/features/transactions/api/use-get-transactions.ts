@@ -1,12 +1,19 @@
 import { useQuery } from '@tanstack/react-query'
 import { QUERY_KEYS } from '../constants'
 import { client } from '@/lib/rpc'
+import { TransactionsFilters } from '../components/use-transactions'
 
-export function useGetTransactions() {
+export function useGetTransactions(filters: TransactionsFilters) {
   const query = useQuery({
     queryKey: QUERY_KEYS.transactions,
     queryFn: async () => {
-      const response = await client.api.transactions.$get()
+      const response = await client.api.transactions.$get({
+        param: {
+          ...filters,
+          year: filters.year.toString(),
+          month: filters.month.toString(),
+        },
+      })
 
       if (!response.ok) {
         return null
@@ -14,7 +21,7 @@ export function useGetTransactions() {
 
       const { data } = await response.json()
 
-      return data
+      return data ?? []
     },
   })
 
