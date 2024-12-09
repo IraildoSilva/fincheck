@@ -1,6 +1,5 @@
 'use client'
 
-import { SliderNavigation } from '@/components/slider-navigation'
 import { formatCurrency } from '@/lib/format-currency'
 import { cn } from '@/lib/utils'
 import { Loader2 } from 'lucide-react'
@@ -10,6 +9,7 @@ import { MONTHS } from '../constants'
 import { SliderOption } from './slider-option'
 import { CategoryIcon } from './categories/category-icon'
 import { formatDate } from '@/lib/format-date'
+import { SliderNavigation } from './slider-navigation'
 
 export function Transactions() {
   const {
@@ -36,7 +36,7 @@ export function Transactions() {
 
   const hasTransactions = transactions.length > 0
   return (
-    <div className="rounded-md min-h-full w-full px-4 py-8 lg:p-5 flex flex-col  border border-gray-200/60 dark:border-muted ">
+    <div className="rounded-md min-h-full w-full px-4 py-8 lg:p-5 flex flex-col border border-gray-200/60 dark:border-muted ">
       {isInitialLoading && (
         <div className="w-full h-full flex items-center justify-center">
           <Loader2 className="size-10 animate-spin" />
@@ -144,7 +144,7 @@ export function Transactions() {
                     role="button"
                     onClick={() => handleOpenEditModal(transaction)}
                     key={transaction.id}
-                    className="bg-white p-4 rounded-2xl flex items-center justify-between gap-4"
+                    className="bg-zinc-100/60 dark:bg-zinc-900/60 p-2 rounded-md flex items-center justify-between gap-4 border border-gray-200/60 dark:border-muted"
                   >
                     <div className="flex items-center gap-3">
                       <CategoryIcon
@@ -155,15 +155,26 @@ export function Transactions() {
                       />
 
                       <div>
-                        <strong className="block font-bold tracking-[-0.5px] leading-none">
-                          {transaction.name}
-                        </strong>
+                        <div className="flex gap-2">
+                          <strong className="font-semibold tracking-[-0.5px] leading-none">
+                            {transaction.name}
+                          </strong>
+                          <span
+                            className="text-xs px-2 rounded-md"
+                            style={{
+                              background: `${transaction.bankAccount.color}10`,
+                              color: `${transaction.bankAccount.color}`,
+                            }}
+                          >
+                            {transaction.bankAccount.name}
+                          </span>
+                        </div>
                         <div className="flex flex-col text-gray-600">
                           <span className="text-sm leading-1">
                             {transaction.category?.name}
                           </span>
                           <span className="text-xs leading-none">
-                            {formatDate(new Date(transaction.date))}
+                            {formatDate(new Date(transaction.date))}{' '}
                           </span>
                         </div>
                       </div>
