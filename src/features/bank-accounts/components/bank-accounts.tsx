@@ -13,7 +13,7 @@ import { AccountCard } from './account-card'
 
 import { cn } from '@/lib/utils'
 import { useWindowWidth } from '@/hooks/use-window-width'
-import { formatCurrency } from '@/lib/formatCurrency'
+import { formatCurrency } from '@/lib/format-currency'
 
 export function BankAccounts() {
   const windowWidth = useWindowWidth()
