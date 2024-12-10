@@ -42,7 +42,9 @@ export function FiltersModal({ onClose, open, onApplyFilters }: FiltersModal) {
     >
       <Card className="rounded-md border-none shadow-none">
         <CardHeader className="">
-          <CardTitle className="text-lg font-bold self-center">Filtros</CardTitle>
+          <CardTitle className="text-lg font-bold self-center">
+            Filtros
+          </CardTitle>
         </CardHeader>
 
         <CardContent>
@@ -56,7 +58,8 @@ export function FiltersModal({ onClose, open, onApplyFilters }: FiltersModal) {
                   onClick={() => handleSelectBankAccount(bankAccount.id)}
                   className={cn(
                     'p-2 rounded-md w-full text-left hover:bg-accent duration-150 transition-colors ',
-                    selectedBankAccountId === bankAccount.id && '!bg-gray-200'
+                    selectedBankAccountId === bankAccount.id &&
+                      '!bg-muted-foreground/30'
                   )}
                 >
                   {bankAccount.name}
