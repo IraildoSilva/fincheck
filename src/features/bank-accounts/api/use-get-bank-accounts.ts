@@ -16,6 +16,7 @@ export function useGetBankAccounts() {
 
       return data
     },
+    staleTime: Infinity,
   })
 
   return query
