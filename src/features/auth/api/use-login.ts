@@ -26,6 +26,7 @@ export function useLogin() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.current })
+      queryClient.invalidateQueries({ queryKey: ['bank-accounts'] })
       router.push('/')
     },
     onError: () => {
