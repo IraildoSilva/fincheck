@@ -39,7 +39,13 @@ export function Transactions() {
 
   const hasTransactions = transactions.length > 0
   return (
-    <div className="rounded-md h-full w-full px-4 py-8 lg:p-5 flex flex-col border border-gray-200/60 dark:border-muted ">
+    <div
+      className={cn(
+        'rounded-md lg:h-full h-fit w-full mb-5 px-4 py-5 lg:p-5 flex flex-col border border-gray-200/60 dark:border-muted',
+        isLoading && 'h-full',
+        isInitialLoading && 'h-full'
+      )}
+    >
       {isInitialLoading && (
         <div className="w-full h-full flex items-center justify-center">
           <Loader2 className="size-10 animate-spin" />
