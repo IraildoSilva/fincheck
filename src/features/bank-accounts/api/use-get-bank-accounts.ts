@@ -3,7 +3,7 @@ import { QUERY_KEYS } from '../constants'
 import { client } from '@/lib/rpc'
 
 export function useGetBankAccounts() {
-  const query = useQuery({
+  const { data, isFetching, isLoading } = useQuery({
     queryKey: QUERY_KEYS.bankAccounts,
     queryFn: async () => {
       const response = await client.api['bank-accounts'].$get()
@@ -19,5 +19,9 @@ export function useGetBankAccounts() {
     staleTime: Infinity,
   })
 
-  return query
+  return {
+    accounts: data || [],
+    isFetching,
+    isLoading,
+  }
 }

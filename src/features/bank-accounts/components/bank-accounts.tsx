@@ -22,7 +22,11 @@ export function BankAccounts() {
     isBeginning: true,
     isEnd: false,
   })
-  const { data: accounts, isFetching } = useGetBankAccounts()
+  const {
+    accounts,
+    isFetching,
+    isLoading: isInitialLoading,
+  } = useGetBankAccounts()
 
   const currentBalance = useMemo(() => {
     return accounts?.reduce(
@@ -35,19 +39,17 @@ export function BankAccounts() {
     setAreValuesVisible((prev) => !prev)
   }
 
-  if (!accounts) {
-    return []
-  }
+  const isLoading = isInitialLoading || isFetching
 
   return (
-    <div className="rounded-md min-h-full w-full px-4 py-8 lg:p-5 flex flex-col bg-zinc-100/60 dark:bg-zinc-900/60 border border-gray-200/60 dark:border-muted  ">
-      {isFetching && (
+    <div className="rounded-md h-full w-full px-4 py-8 lg:p-5 flex flex-col bg-zinc-100/60 dark:bg-zinc-900/60 border border-gray-200/60 dark:border-muted">
+      {isLoading && (
         <div className="w-full h-full flex items-center justify-center">
-          <Loader2 className="text-primary  w-10 h-10 animate-spin" />
+          <Loader2 className="size-10 animate-spin" />
         </div>
       )}
 
-      {!isFetching && (
+      {!isLoading && (
         <>
           <div>
             <span className="tracking-[-0.5px] block">Saldo total</span>
