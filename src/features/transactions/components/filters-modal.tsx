@@ -31,7 +31,7 @@ export function FiltersModal({ onClose, open, onApplyFilters }: FiltersModal) {
     setSelectedYear((prevState) => prevState + step)
   }
 
-  const { data: accounts } = useGetBankAccounts()
+  const { accounts } = useGetBankAccounts()
 
   return (
     <ResponsiveModal
@@ -52,7 +52,7 @@ export function FiltersModal({ onClose, open, onApplyFilters }: FiltersModal) {
             <span className="text-lg font-bold tracking-[-1px]">Conta</span>
 
             <div className="space-y-2 mt-2">
-              {accounts?.map((bankAccount) => (
+              {accounts.map((bankAccount) => (
                 <button
                   key={bankAccount.id}
                   onClick={() => handleSelectBankAccount(bankAccount.id)}
