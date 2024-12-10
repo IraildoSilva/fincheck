@@ -2,7 +2,7 @@
 
 import { formatCurrency } from '@/lib/format-currency'
 import { cn } from '@/lib/utils'
-import { FilterIcon, Loader2 } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { useTransactions } from './use-transactions'
 import { MONTHS } from '../constants'
@@ -12,6 +12,7 @@ import { formatDate } from '@/lib/format-date'
 import { SliderNavigation } from './slider-navigation'
 import { TransactionTypeDropdown } from './transactions-type-drowdown'
 import { FiltersModal } from './filters-modal'
+import { FilterIcon } from './filter-icon'
 
 export function Transactions() {
   const {
