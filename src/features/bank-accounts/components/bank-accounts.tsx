@@ -14,10 +14,11 @@ import { AccountCard } from './account-card'
 import { cn } from '@/lib/utils'
 import { useWindowWidth } from '@/hooks/use-window-width'
 import { formatCurrency } from '@/lib/format-currency'
+import { useDashboard } from '@/hooks/use-dashboard'
 
 export function BankAccounts() {
   const windowWidth = useWindowWidth()
-  const [areValuesVisible, setAreValuesVisible] = useState(true)
+  const { areValuesVisible, toggleValuesVisibility } = useDashboard()
   const [sliderState, setSliderState] = useState({
     isBeginning: true,
     isEnd: false,
@@ -34,10 +35,6 @@ export function BankAccounts() {
       0
     )
   }, [accounts])
-
-  function handleClick() {
-    setAreValuesVisible((prev) => !prev)
-  }
 
   const isLoading = isInitialLoading || isFetching
 
@@ -66,7 +63,7 @@ export function BankAccounts() {
 
               <Button
                 variant={'ghost'}
-                onClick={handleClick}
+                onClick={toggleValuesVisibility}
                 size={'icon'}
                 className="[&_svg]:size-5"
               >

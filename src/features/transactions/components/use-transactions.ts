@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useGetTransactions } from '../api/use-get-transactions'
 import { Transaction } from '@/entities/Transactions'
+import { useDashboard } from '@/hooks/use-dashboard'
 
 export type TransactionsFilters = {
   month: number
@@ -12,7 +13,7 @@ export type TransactionsFilters = {
 }
 
 export function useTransactions() {
-  // const { areValuesVisible } = useDashboard()
+  const { areValuesVisible } = useDashboard()
   const [slideState, setSlideState] = useState({
     isBeginning: true,
     isEnd: false,
@@ -99,7 +100,7 @@ export function useTransactions() {
   return {
     slideState,
     setSlideState,
-    // areValuesVisible,
+    areValuesVisible,
     isInitialLoading,
     isLoading: isFetching,
     isFiltersModalOpen,

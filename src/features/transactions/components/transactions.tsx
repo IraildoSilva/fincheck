@@ -18,7 +18,7 @@ export function Transactions() {
   const {
     slideState,
     setSlideState,
-    // areValuesVisible,
+    areValuesVisible,
     isInitialLoading,
     transactions,
     isLoading,
@@ -192,7 +192,7 @@ export function Transactions() {
                     <span
                       className={cn(
                         'text-red-500 font-medium tracking-[-0.5px] text-nowrap',
-                        // !areValuesVisible && 'blur-sm',
+                        !areValuesVisible && 'blur-sm',
                         transaction.type === 'INCOME' && 'text-emerald-500'
                       )}
                     >
