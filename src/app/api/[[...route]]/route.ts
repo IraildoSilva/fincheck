@@ -5,6 +5,7 @@ import { handle } from 'hono/vercel'
 import auth from '@/features/auth/server/route'
 import bankAccount from '@/features/bank-accounts/server/route'
 import transaction from '@/features/transactions/server/route'
+import categories from '@/features/categories/server/route'
 
 export const runtime = 'nodejs'
 
@@ -14,6 +15,7 @@ const routes = app
   .route('/auth', auth)
   .route('/bank-accounts', bankAccount)
   .route('/transactions', transaction)
+  .route('/categories', categories)
 
 export const GET = handle(app)
 export const POST = handle(app)
