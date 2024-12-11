@@ -1,3 +1,5 @@
+'use client'
+
 import { BankAccount } from '@/entities/BankAccount'
 import { createContext, useCallback, useState } from 'react'
 
@@ -20,7 +22,8 @@ interface DashboardContextValue {
 interface DashboardProviderProps {
   children: React.ReactNode
 }
-const DashboardContext = createContext({} as DashboardContextValue)
+
+export const DashboardContext = createContext({} as DashboardContextValue)
 
 export function DashboardProvider({ children }: DashboardProviderProps) {
   const [areValuesVisible, setAreValuesVisible] = useState(true)
