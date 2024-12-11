@@ -1,24 +1,26 @@
-// import { InferRequestType, InferResponseType } from 'hono'
-// import { client } from '@/lib/rpc'
-// import { useMutation } from '@tanstack/react-query'
+import { client } from '@/lib/rpc'
+import { useMutation } from '@tanstack/react-query'
+import { InferRequestType, InferResponseType } from 'hono'
 
-// type Route = typeof client.api.transactions.$post
+type Route = typeof client.api.transactions.$post
 
-// type RequestType = InferRequestType<Route>
-// type ResponseType = InferResponseType<Route>
+type ResponseType = InferResponseType<Route>
+type RequestType = InferRequestType<Route>
 
-// export function useCreateTransaction() {
-//   const mutation = useMutation<ResponseType, Error, RequestType>({
-//     mutationFn: async ({ json }) => {
-//       const response = await client.api.transactions.$post({ json })
+export function useCreateTransaction() {
+  const mutation = useMutation<ResponseType, Error, RequestType>({
+    mutationFn: async ({ json }) => {
+      const response = await client.api.transactions.$post({ json })
 
-//       if (!response.ok) {
-//         return null
-//       }
+      if (!response.ok) {
+        throw new Error('Failed to create transaction')
+      }
 
-//       return await response.json()
-//     },
-//   })
+      const data = await response.json()
 
-//   return mutation
-// }
+      return data
+    },
+  })
+
+  return mutation
+}
