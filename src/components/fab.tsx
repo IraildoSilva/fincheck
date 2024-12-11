@@ -15,10 +15,10 @@ export function Fab() {
   const { openNewAccountModal, openNewTransactionModal } = useDashboard()
 
   return (
-    <div className="fixed bottom-4 right-4">
+    <div className="fixed bottom-3 right-3">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="w-12 h-12 rounded-full bg-foreground flex items-center justify-center text-background shadow-lg">
+          <button className="w-12 h-12 rounded-full bg-foreground flex items-center justify-center text-background shadow-md shadow-zinc-900">
             <PlusIcon className="size-6" />
           </button>
         </DropdownMenuTrigger>
