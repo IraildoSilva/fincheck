@@ -11,7 +11,7 @@ export const transactionSchema = z.object({
   bankAccountId: z.string().uuid(),
   categoryId: z.string().uuid(),
   name: z.string(),
-  value: z.number(),
+  value: z.number().positive(),
   date: z.string(),
   type: z.enum(['INCOME', 'EXPENSE']),
 })
