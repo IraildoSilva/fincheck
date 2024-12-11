@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation'
 import { Transactions } from '@/features/transactions/components/transactions'
 import { DashboardProvider } from '@/contexts/dashboard-context'
 import { Fab } from '@/components/fab'
+import { CreateTransactionModal } from '@/features/transactions/components/modals/create-transaction-modal'
 
 export default async function Dashboard() {
   const user = await auth()
@@ -31,8 +32,9 @@ export default async function Dashboard() {
             <Transactions />
           </div>
         </main>
-        
+
         <Fab />
+        <CreateTransactionModal />
       </div>
     </DashboardProvider>
   )
