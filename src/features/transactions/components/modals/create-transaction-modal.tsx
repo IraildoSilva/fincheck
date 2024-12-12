@@ -110,7 +110,7 @@ export function CreateTransactionModal() {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div>
-                <span className="text-muted-foreground text-xs text-center]">
+                <span className="text-muted-foreground text-xs text-center">
                   Valor da {isExpense ? 'despesa' : 'receita'}
                 </span>
 
@@ -167,11 +167,11 @@ export function CreateTransactionModal() {
                             <SelectValue
                               placeholder={
                                 isExpense ? (
-                                  <span className="text-muted-foreground">
+                                  <span className="text-muted-foreground text-base md:text-sm">
                                     Pagar com
                                   </span>
                                 ) : (
-                                  <span className="text-muted-foreground">
+                                  <span className="text-muted-foreground text-base md:text-sm">
                                     Receber na conta
                                   </span>
                                 )
@@ -182,7 +182,11 @@ export function CreateTransactionModal() {
 
                         <SelectContent>
                           {accounts?.map((account) => (
-                            <SelectItem key={account.id} value={account.id}>
+                            <SelectItem
+                              key={account.id}
+                              value={account.id}
+                              className="text-base md:text-sm"
+                            >
                               {account.name}
                             </SelectItem>
                           ))}
@@ -206,7 +210,7 @@ export function CreateTransactionModal() {
                           <SelectTrigger>
                             <SelectValue
                               placeholder={
-                                <span className="text-muted-foreground">
+                                <span className="text-muted-foreground text-base md:text-sm">
                                   Categoria
                                 </span>
                               }
@@ -216,7 +220,11 @@ export function CreateTransactionModal() {
 
                         <SelectContent>
                           {categories?.map((category) => (
-                            <SelectItem key={category.id} value={category.id}>
+                            <SelectItem
+                              key={category.id}
+                              value={category.id}
+                              className="text-base md:text-sm"
+                            >
                               {category.name}
                             </SelectItem>
                           ))}
@@ -238,14 +246,16 @@ export function CreateTransactionModal() {
                             <Button
                               variant={'outline'}
                               className={cn(
-                                'w-full pl-3 text-left font-normal',
+                                'w-full pl-3 text-left font-normal text-base md:text-sm',
                                 !field.value && 'text-muted-foreground'
                               )}
                             >
                               {field.value ? (
                                 format(field.value, 'PPP')
                               ) : (
-                                <span>Pick a date</span>
+                                <span className="text-base md:text-sm">
+                                  Pick a date
+                                </span>
                               )}
                               <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                             </Button>
@@ -270,7 +280,7 @@ export function CreateTransactionModal() {
 
               <Button
                 type="submit"
-                className="mt-6 w-full"
+                className="mt-6 w-full text-base md:text-sm"
                 disabled={isPending}
               >
                 {isPending && <Loader2 className="size-4 animate-spin" />}
