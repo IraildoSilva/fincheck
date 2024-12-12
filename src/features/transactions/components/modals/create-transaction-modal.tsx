@@ -140,6 +140,7 @@ export function CreateTransactionModal() {
                         <Input
                           {...field}
                           type="text"
+                          className="text-sm"
                           placeholder={
                             isExpense ? 'Nome da Despesa' : 'Nome da Receita'
                           }
