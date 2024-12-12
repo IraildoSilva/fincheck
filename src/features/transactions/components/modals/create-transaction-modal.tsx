@@ -32,12 +32,15 @@ import {
 import { Button } from '@/components/ui/button'
 import { format } from 'date-fns'
 import { cn } from '@/lib/utils'
-import { CalendarIcon } from 'lucide-react'
+import { CalendarIcon, Loader2 } from 'lucide-react'
 import { Calendar } from '@/components/ui/calendar'
+import { useGetBankAccounts } from '@/features/bank-accounts/api/use-get-bank-accounts'
+import { useCreateTransaction } from '../../api/use-create-transaction'
+import { currencyStringToNumber } from '@/lib/currency-string-to-number'
 
 const schema = z.object({
   value: z.string().min(1, 'Informe o valor'),
-  name: z.string().min(1, 'Informe o nome'),
+  name: z.string({ message: 'Informe o nome' }).min(1, 'Informe o nome'),
   categoryId: z.string().min(1, 'Informe uma categoria'),
   bankAccountId: z.string().min(1, 'Informe uma conta'),
   date: z.date(),
@@ -62,10 +65,22 @@ export function CreateTransactionModal() {
     },
   })
 
+  const { accounts } = useGetBankAccounts()
   const { data: categoriesList } = useGetCategories()
+  const { mutateAsync, isPending } = useCreateTransaction()
 
-  function onSubmit(data: FormData) {
-    console.log(data)
+  async function onSubmit(data: FormData) {
+    await mutateAsync({
+      json: {
+        ...data,
+        value: currencyStringToNumber(data.value),
+        type: newTransactionType!,
+        date: data.date.toISOString(),
+      },
+    })
+
+    closeNewTransactionModal()
+    form.reset()
   }
 
   const categories = useMemo(() => {
@@ -80,9 +95,9 @@ export function CreateTransactionModal() {
     <ResponsiveModal
       open={isNewTransactionModalOpen}
       onOpenChange={closeNewTransactionModal}
-      dialogClassName="max-w-[400px]"
+      dialogClassName="max-w-[340px]"
     >
-      <Card>
+      <Card className="shadow-none border-none">
         <CardHeader>
           <CardTitle className="text-lg font-bold self-center">
             {isExpense ? 'Nova Despesa' : 'Nova Receita'}
@@ -130,6 +145,7 @@ export function CreateTransactionModal() {
                           }
                         />
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -137,6 +153,39 @@ export function CreateTransactionModal() {
                 <FormField
                   control={form.control}
                   name="bankAccountId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue
+                              placeholder={
+                                isExpense ? 'Pagar com' : 'Receber na conta'
+                              }
+                              className="text-muted-foreground"
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+
+                        <SelectContent>
+                          {accounts?.map((account) => (
+                            <SelectItem key={account.id} value={account.id}>
+                              {account.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="categoryId"
                   render={({ field }) => (
                     <FormItem>
                       <Select
@@ -160,6 +209,7 @@ export function CreateTransactionModal() {
                           ))}
                         </SelectContent>
                       </Select>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -206,8 +256,13 @@ export function CreateTransactionModal() {
                 />
               </div>
 
-              <Button type="submit" className="mt-6 w-full">
-                Salvar
+              <Button
+                type="submit"
+                className="mt-6 w-full"
+                disabled={isPending}
+              >
+                {isPending && <Loader2 className="size-4 animate-spin" />}
+                {!isPending && 'Salvar'}
               </Button>
             </form>
           </Form>
