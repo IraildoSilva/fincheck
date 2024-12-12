@@ -1,7 +1,12 @@
 'use client'
 
-import { InputCurrency } from '@/components/input-currency'
-import { ResponsiveModal } from '@/components/responsive-modal'
+import { z } from 'zod'
+import { useMemo } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { format } from 'date-fns'
+import { CalendarIcon, Loader2 } from 'lucide-react'
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   Form,
@@ -10,33 +15,30 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Select } from '@/components/ui/select'
-import { useGetCategories } from '@/features/categories/api/use-get-categories'
-import { useDashboard } from '@/hooks/use-dashboard'
-import { zodResolver } from '@hookform/resolvers/zod'
 import {
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useMemo } from 'react'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+import { Input } from '@/components/ui/input'
+import { Select } from '@/components/ui/select'
+import { ResponsiveModal } from '@/components/responsive-modal'
+import { InputCurrency } from '@/components/input-currency'
 import { Button } from '@/components/ui/button'
-import { format } from 'date-fns'
-import { cn } from '@/lib/utils'
-import { CalendarIcon, Loader2 } from 'lucide-react'
 import { Calendar } from '@/components/ui/calendar'
+
+import { useGetCategories } from '@/features/categories/api/use-get-categories'
 import { useGetBankAccounts } from '@/features/bank-accounts/api/use-get-bank-accounts'
 import { useCreateTransaction } from '../../api/use-create-transaction'
+import { useDashboard } from '@/hooks/use-dashboard'
 import { currencyStringToNumber } from '@/lib/currency-string-to-number'
+import { cn } from '@/lib/utils'
 
 const schema = z.object({
   value: z.string().min(1, 'Informe o valor'),
@@ -229,14 +231,14 @@ export function CreateTransactionModal() {
                   control={form.control}
                   name="date"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="flex flex-col">
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
                               variant={'outline'}
                               className={cn(
-                                'w-full pl-3 text-left font-normal',
+                                'w-[240px] pl-3 text-left font-normal',
                                 !field.value && 'text-muted-foreground'
                               )}
                             >
