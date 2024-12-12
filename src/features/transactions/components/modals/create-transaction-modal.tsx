@@ -163,9 +163,16 @@ export function CreateTransactionModal() {
                           <SelectTrigger>
                             <SelectValue
                               placeholder={
-                                isExpense ? 'Pagar com' : 'Receber na conta'
+                                isExpense ? (
+                                  <span className="text-muted-foreground">
+                                    Pagar com
+                                  </span>
+                                ) : (
+                                  <span className="text-muted-foreground">
+                                    Receber na conta
+                                  </span>
+                                )
                               }
-                              className="text-muted-foreground"
                             />
                           </SelectTrigger>
                         </FormControl>
@@ -195,8 +202,11 @@ export function CreateTransactionModal() {
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue
-                              placeholder={'Categoria'}
-                              className="text-muted-foreground"
+                              placeholder={
+                                <span className="text-muted-foreground">
+                                  Categoria
+                                </span>
+                              }
                             />
                           </SelectTrigger>
                         </FormControl>
