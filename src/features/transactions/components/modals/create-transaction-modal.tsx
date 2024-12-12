@@ -110,7 +110,7 @@ export function CreateTransactionModal() {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div>
-                <span className="text-muted-foreground text-xs text-center">
+                <span className="text-muted-foreground text-xs">
                   Valor da {isExpense ? 'despesa' : 'receita'}
                 </span>
 
