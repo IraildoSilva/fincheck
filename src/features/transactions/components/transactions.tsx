@@ -13,6 +13,7 @@ import { SliderNavigation } from './slider-navigation'
 import { TransactionTypeDropdown } from './transactions-type-drowdown'
 import { FiltersModal } from './filters-modal'
 import { FilterIcon } from './filter-icon'
+import { EditTransactionModal } from './modals/edit-transaction-modal'
 
 export function Transactions() {
   const {
@@ -29,9 +30,9 @@ export function Transactions() {
     filters,
     handleApplyFilters,
     handleOpenEditModal,
-    // handleCloseEditModal,
-    // isEditModalOpen,
-    // transactionBeingEdited,
+    handleCloseEditModal,
+    isEditModalOpen,
+    transactionBeingEdited,
     // handleOpenSummaryModal,
     // handleCloseSummaryModal,
     // isSummaryModalOpen,
@@ -141,13 +142,13 @@ export function Transactions() {
 
             {hasTransactions && !isLoading && (
               <>
-                {/* {transactionBeingEdited && (
+                {transactionBeingEdited && (
                   <EditTransactionModal
                     open={isEditModalOpen}
                     onClose={handleCloseEditModal}
                     transaction={transactionBeingEdited}
                   />
-                )} */}
+                )}
                 {transactions.map((transaction) => (
                   <div
                     role="button"
