@@ -15,3 +15,7 @@ export const transactionSchema = z.object({
   date: z.string(),
   type: z.enum(['INCOME', 'EXPENSE']),
 })
+
+export const transactionIdSchema = z.object({
+  transactionId: z.string().uuid(),
+})

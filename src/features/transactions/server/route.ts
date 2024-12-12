@@ -2,7 +2,11 @@ import { zValidator } from '@hono/zod-validator'
 import { Hono } from 'hono'
 import { authMiddleware } from '@/lib/auth-middleware'
 import prisma from '@/lib/db'
-import { filtersSchema, transactionSchema } from '../schemas'
+import {
+  filtersSchema,
+  transactionIdSchema,
+  transactionSchema,
+} from '../schemas'
 
 const app = new Hono()
   .get('/', zValidator('query', filtersSchema), authMiddleware, async (c) => {
@@ -60,6 +64,21 @@ const app = new Hono()
       })
 
       return c.json({ data: transaction })
+    }
+  )
+  .delete(
+    '/:transactionId',
+    zValidator('param', transactionIdSchema),
+    authMiddleware,
+    async (c) => {
+      const { transactionId } = c.req.valid('param')
+      const userId = c.get('userId')
+
+      await prisma.transaction.delete({
+        where: { userId, id: transactionId },
+      })
+
+      return c.json({ success: true })
     }
   )
 
