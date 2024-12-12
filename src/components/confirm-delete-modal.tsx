@@ -22,7 +22,7 @@ export function ConfirmDeleteModal({
   return (
     <ResponsiveModal open onOpenChange={onClose} dialogClassName="w-[340px]">
       <Card>
-        <CardHeader className="flex flex-col items-center text-center gap-6">
+        <CardHeader className="flex flex-col items-center text-center gap-6 border-none shadow-none">
           <div className="w-[52px] h-[52px] rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center">
             <TrashIcon className="w-6 h-6 text-red-500" />
           </div>
