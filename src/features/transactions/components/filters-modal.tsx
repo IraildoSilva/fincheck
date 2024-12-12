@@ -35,7 +35,7 @@ export function FiltersModal({ onClose, open, onApplyFilters }: FiltersModal) {
 
   return (
     <ResponsiveModal
-      dialogClassName={'max-w-[400px]'}
+      dialogClassName={'max-w-[340px]'}
       open={open}
       onOpenChange={onClose}
       // title="Filtros"

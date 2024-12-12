@@ -24,7 +24,7 @@ export function ResponsiveModal({
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent
           className={cn(
-            'w-full max-w-lg p-0 border-none overflow-y-auto hide-scrollbar max-h-[85vh]',
+            'w-full max-w-lg p-0 border overflow-y-auto hide-scrollbar max-h-[85vh]',
             dialogClassName
           )}
         >
