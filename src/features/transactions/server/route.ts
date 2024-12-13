@@ -66,6 +66,32 @@ const app = new Hono()
       return c.json({ data: transaction })
     }
   )
+  .put(
+    '/:transactionId',
+    zValidator('param', transactionIdSchema),
+    zValidator('json', transactionSchema),
+    authMiddleware,
+    async (c) => {
+      const { transactionId } = c.req.valid('param')
+      const { bankAccountId, categoryId, name, date, type, value } =
+        c.req.valid('json')
+      const userId = c.get('userId')
+
+      const transaction = await prisma.transaction.update({
+        where: { userId, id: transactionId },
+        data: {
+          bankAccountId,
+          categoryId,
+          date,
+          name,
+          type,
+          value,
+        },
+      })
+
+      return c.json({ data: transaction })
+    }
+  )
   .delete(
     '/:transactionId',
     zValidator('param', transactionIdSchema),
