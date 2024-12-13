@@ -98,7 +98,6 @@ export function CreateTransactionModal() {
       open={isNewTransactionModalOpen}
       onOpenChange={closeNewTransactionModal}
       dialogClassName="max-w-[340px]"
-      drawerClassname='h-[64%]'
     >
       <Card className="shadow-none border-none">
         <CardHeader>
@@ -183,10 +182,7 @@ export function CreateTransactionModal() {
 
                         <SelectContent>
                           {accounts?.map((account) => (
-                            <SelectItem
-                              key={account.id}
-                              value={account.id}
-                            >
+                            <SelectItem key={account.id} value={account.id}>
                               {account.name}
                             </SelectItem>
                           ))}
@@ -220,10 +216,7 @@ export function CreateTransactionModal() {
 
                         <SelectContent>
                           {categories?.map((category) => (
-                            <SelectItem
-                              key={category.id}
-                              value={category.id}
-                            >
+                            <SelectItem key={category.id} value={category.id}>
                               {category.name}
                             </SelectItem>
                           ))}
