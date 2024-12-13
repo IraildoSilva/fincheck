@@ -167,11 +167,11 @@ export function CreateTransactionModal() {
                             <SelectValue
                               placeholder={
                                 isExpense ? (
-                                  <span className="text-muted-foreground text-base md:text-sm">
+                                  <span className="text-muted-foreground">
                                     Pagar com
                                   </span>
                                 ) : (
-                                  <span className="text-muted-foreground text-base md:text-sm">
+                                  <span className="text-muted-foreground">
                                     Receber na conta
                                   </span>
                                 )
@@ -185,7 +185,6 @@ export function CreateTransactionModal() {
                             <SelectItem
                               key={account.id}
                               value={account.id}
-                              className="text-base md:text-sm"
                             >
                               {account.name}
                             </SelectItem>
@@ -210,7 +209,7 @@ export function CreateTransactionModal() {
                           <SelectTrigger>
                             <SelectValue
                               placeholder={
-                                <span className="text-muted-foreground text-base md:text-sm">
+                                <span className="text-muted-foreground">
                                   Categoria
                                 </span>
                               }
@@ -223,7 +222,6 @@ export function CreateTransactionModal() {
                             <SelectItem
                               key={category.id}
                               value={category.id}
-                              className="text-base md:text-sm"
                             >
                               {category.name}
                             </SelectItem>
