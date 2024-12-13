@@ -33,7 +33,7 @@ import { CalendarIcon, Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { useDeleteTransaction } from '../../api/use-delete-transaction'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { ConfirmDeleteModal } from '@/components/confirm-delete-modal'
 import { useUpdateTransaction } from '../../api/use-update-transaction'
 import { currencyStringToNumber } from '@/lib/currency-string-to-number'
@@ -76,7 +76,7 @@ export function EditTransactionModal({
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
   const { accounts } = useGetBankAccounts()
-  const { data: categories } = useGetCategories()
+  const { data: categoriesList } = useGetCategories()
   const { mutateAsync: deleteTransaction, isPending: isLoadingDelete } =
     useDeleteTransaction()
   const { mutateAsync: updateTransaction, isPending } = useUpdateTransaction()
@@ -108,6 +108,10 @@ export function EditTransactionModal({
   function handleCloseDeleteModal() {
     setIsDeleteModalOpen(false)
   }
+
+  const categories = useMemo(() => {
+    return categoriesList?.filter(category => category.type === transaction?.type)
+  }, [categoriesList, transaction])
 
   const isExpense = transaction?.type === 'EXPENSE'
 
