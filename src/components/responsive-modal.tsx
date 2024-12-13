@@ -8,7 +8,8 @@ interface ResponsiveModalProps {
   children: React.ReactNode
   open: boolean
   onOpenChange: (open: boolean) => void
-  dialogClassName: string
+  dialogClassName?: string
+  drawerClassname?: string
 }
 
 export function ResponsiveModal({
@@ -16,6 +17,7 @@ export function ResponsiveModal({
   onOpenChange,
   open,
   dialogClassName,
+  drawerClassname,
 }: ResponsiveModalProps) {
   const isDesktop = useMedia('(min-width: 1024px)', true)
 
@@ -36,10 +38,8 @@ export function ResponsiveModal({
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="outline-none">
-        <div className="overflow-y-auto hide-scrollbar max-h-[60vh]">
-          {children}
-        </div>
+      <DrawerContent className={cn('outline-none', drawerClassname)}>
+        <div className="overflow-y-auto hide-scrollbar">{children}</div>
       </DrawerContent>
     </Drawer>
   )

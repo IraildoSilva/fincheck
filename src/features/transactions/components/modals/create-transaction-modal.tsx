@@ -98,6 +98,7 @@ export function CreateTransactionModal() {
       open={isNewTransactionModalOpen}
       onOpenChange={closeNewTransactionModal}
       dialogClassName="max-w-[340px]"
+      drawerClassname='h-[64%]'
     >
       <Card className="shadow-none border-none">
         <CardHeader>
