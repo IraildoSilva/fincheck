@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 import prisma from '@/lib/db'
 import { authMiddleware } from '@/lib/auth-middleware'
 import { zValidator } from '@hono/zod-validator'
-import { bankAccountDto } from '../schemas'
+import { bankAccountDto, bankAccountIdSchema } from '../schemas'
 
 const app = new Hono()
   .get('/', authMiddleware, async (c) => {
@@ -58,5 +58,28 @@ const app = new Hono()
 
     return c.json({ data: bankAccount })
   })
+  .put(
+    '/:bankAccountId',
+    zValidator('param', bankAccountIdSchema),
+    zValidator('json', bankAccountDto),
+    authMiddleware,
+    async (c) => {
+      const { bankAccountId } = c.req.valid('param')
+      const { color, name, initialBalance, type } = c.req.valid('json')
+      const userId = c.get('userId')
+
+      const bankAccount = await prisma.bankAccount.update({
+        where: { userId, id: bankAccountId },
+        data: {
+          color,
+          name,
+          initialBalance,
+          type,
+        },
+      })
+
+      return c.json({ data: bankAccount })
+    }
+  )
 
 export default app
