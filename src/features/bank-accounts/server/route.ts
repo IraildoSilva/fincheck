@@ -81,5 +81,20 @@ const app = new Hono()
       return c.json({ data: bankAccount })
     }
   )
+  .delete(
+    '/:bankAccountId',
+    zValidator('param', bankAccountIdSchema),
+    authMiddleware,
+    async (c) => {
+      const { bankAccountId } = c.req.valid('param')
+      const userId = c.get('userId')
+
+      await prisma.bankAccount.delete({
+        where: { userId, id: bankAccountId },
+      })
+
+      return c.json({ success: true })
+    }
+  )
 
 export default app
