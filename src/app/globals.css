@@ -101,6 +101,3 @@ body {
   background: #4f5553cc;
 }
 
-[vaul-drawer][vaul-drawer-direction='bottom']:after {
-  z-index: -1;
-}

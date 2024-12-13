@@ -37,7 +37,7 @@ export function ResponsiveModal({
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="outline-none">
-        <div className="overflow-y-auto hide-scrollbar max-h-[85vh]">
+        <div className="overflow-y-auto hide-scrollbar max-h-[60vh]">
           {children}
         </div>
       </DrawerContent>
