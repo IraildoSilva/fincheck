@@ -1,4 +1,3 @@
-import { TrashIcon } from '@/components/icons/trash-icon'
 import { InputCurrency } from '@/components/input-currency'
 import { ResponsiveModal } from '@/components/responsive-modal'
 import { Button } from '@/components/ui/button'
@@ -30,12 +29,14 @@ import { useGetCategories } from '@/features/categories/api/use-get-categories'
 import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
-import { CalendarIcon } from 'lucide-react'
+import { CalendarIcon, Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { useDeleteTransaction } from '../../api/use-delete-transaction'
 import { useState } from 'react'
 import { ConfirmDeleteModal } from '@/components/confirm-delete-modal'
+import { useUpdateTransaction } from '../../api/use-update-transaction'
+import { currencyStringToNumber } from '@/lib/currency-string-to-number'
 
 const schema = z.object({
   value: z.union([
@@ -76,14 +77,28 @@ export function EditTransactionModal({
 
   const { accounts } = useGetBankAccounts()
   const { data: categories } = useGetCategories()
-  const { mutateAsync, isPending: isLoadingDelete } = useDeleteTransaction()
+  const { mutateAsync: deleteTransaction, isPending: isLoadingDelete } =
+    useDeleteTransaction()
+  const { mutateAsync: updateTransaction, isPending } = useUpdateTransaction()
 
   async function handleDeleteTransaction() {
-    await mutateAsync({ param: { transactionId: transaction!.id } })
+    await deleteTransaction({ param: { transactionId: transaction!.id } })
+
+    onClose()
   }
 
   async function onSubmit(data: FormData) {
-    console.log(data)
+    await updateTransaction({
+      param: { transactionId: transaction!.id },
+      json: {
+        ...data,
+        type: transaction!.type,
+        value: currencyStringToNumber(data.value),
+        date: data.date.toISOString(),
+      },
+    })
+
+    onClose()
   }
 
   function handleOpenDeleteModal() {
@@ -156,6 +171,7 @@ export function EditTransactionModal({
                     <FormItem>
                       <FormControl>
                         <Input
+                          disabled={isPending}
                           {...field}
                           type="text"
                           // className="text-sm"
@@ -177,6 +193,7 @@ export function EditTransactionModal({
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
+                        disabled={isPending}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -221,6 +238,7 @@ export function EditTransactionModal({
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
+                        disabled={isPending}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -257,7 +275,7 @@ export function EditTransactionModal({
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
                       <Popover>
-                        <PopoverTrigger asChild>
+                        <PopoverTrigger asChild disabled={isPending}>
                           <FormControl>
                             <Button
                               variant={'outline'}
@@ -297,21 +315,20 @@ export function EditTransactionModal({
               <Button
                 type="submit"
                 className="mt-6 w-full text-base md:text-sm"
-                // disabled={isPending}
+                disabled={isPending}
               >
-                {/* {isPending && <Loader2 className="size-4 animate-spin" />} */}
-                {/* {!isPending && 'Salvar'} */}
-                Editar
+                {isPending && <Loader2 className="size-4 animate-spin" />}
+                {!isPending && 'Salvar'}
               </Button>
 
               <Button
                 variant={'secondary'}
                 type="button"
                 className="mt-2 w-full text-base md:text-sm"
-								onClick={handleOpenDeleteModal}
+                onClick={handleOpenDeleteModal}
+                disabled={isPending}
               >
                 Deletar
-                <TrashIcon />
               </Button>
             </form>
           </Form>
