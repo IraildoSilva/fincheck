@@ -10,6 +10,7 @@ const Drawer = ({
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
   <DrawerPrimitive.Root
+    repositionInputs={false}
     shouldScaleBackground={shouldScaleBackground}
     {...props}
   />
@@ -48,8 +49,8 @@ const DrawerContent = React.forwardRef<
       )}
       {...props}
     >
-        <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
-        {children}
+      <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
+      {children}
     </DrawerPrimitive.Content>
   </DrawerPortal>
 ))
