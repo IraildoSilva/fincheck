@@ -18,7 +18,7 @@ import { useDashboard } from '@/hooks/use-dashboard'
 
 export function BankAccounts() {
   const windowWidth = useWindowWidth()
-  const { areValuesVisible, toggleValuesVisibility } = useDashboard()
+  const { areValuesVisible, toggleValuesVisibility, openNewAccountModal } = useDashboard()
   const [sliderState, setSliderState] = useState({
     isBeginning: true,
     isEnd: false,
@@ -83,7 +83,7 @@ export function BankAccounts() {
                 </div>
 
                 <button
-                  // onClick={openNewAccountModal}
+                  onClick={openNewAccountModal}
                   className="mt-1 h-52 border-2 border-zinc-200 dark:border-zinc-700 rounded-md border-dashed flex flex-col items-center justify-center gap-4 text-white"
                 >
                   <div className="w-11 h-11 rounded-full border-dashed border-2 border-muted-foreground flex items-center justify-center">
