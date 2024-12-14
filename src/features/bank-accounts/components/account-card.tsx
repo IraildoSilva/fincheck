@@ -2,6 +2,7 @@ import { cn } from '@/lib/utils'
 import { BankAccount } from '@/entities/BankAccount'
 import { BankAccountTypeIcon } from './bank-account-type-icon'
 import { formatCurrency } from '@/lib/format-currency'
+import { useDashboard } from '@/hooks/use-dashboard'
 
 interface AccountCardProps {
   data: BankAccount
@@ -10,13 +11,14 @@ interface AccountCardProps {
 
 export function AccountCard({ data, areValueVisible }: AccountCardProps) {
   const { color, type, name, currentBalance } = data
+  const { openEditAccountModal } = useDashboard()
 
   return (
     <div className="border border-gray-200/60 dark:border-muted rounded-md">
       <div
         className="flex-1 h-[200px] rounded-md p-4 flex flex-col justify-between border-b-4 border-red-600"
         style={{ borderColor: color }}
-        // onClick={() => openEditAccountModal(data)}
+        onClick={() => openEditAccountModal(data)}
         role="button"
       >
         <div>
