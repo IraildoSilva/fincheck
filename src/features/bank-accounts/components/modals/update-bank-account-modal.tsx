@@ -68,6 +68,8 @@ export function UpdateBankAccountModal() {
 
   async function handleDeleteAccount() {
     await deleteAccount({ param: { bankAccountId: accountBeingEdited!.id } })
+
+    closeEditAccountModal()
   }
 
   async function onSubmit(data: FormData) {
