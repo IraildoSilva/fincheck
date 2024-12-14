@@ -41,21 +41,21 @@ export function TransactionTypeDropdown({
       <DropdownMenuContent className="w-[240px]">
         <DropdownMenuItem
           onSelect={() => onSelect('INCOME')}
-          className="gap-2 cursor-pointer"
+          className="gap-2 cursor-pointer [&_svg]:size-6"
         >
           <IncomeIcon />
           Receitas
         </DropdownMenuItem>
         <DropdownMenuItem
           onSelect={() => onSelect('EXPENSE')}
-          className="gap-2 cursor-pointer"
+          className="gap-2 cursor-pointer [&_svg]:size-6"
         >
           <ExpensesIcon />
           Despesas
         </DropdownMenuItem>
         <DropdownMenuItem
           onSelect={() => onSelect(undefined)}
-          className="gap-2 cursor-pointer"
+          className="gap-2 cursor-pointer [&_svg]:size-6"
         >
           <TransactionsIcon />
           Transações

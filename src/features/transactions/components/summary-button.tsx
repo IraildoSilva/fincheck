@@ -13,7 +13,7 @@ export function SummaryButton({ onClick, disabled }: SummaryButtonProps) {
     <Button
       variant="ghost"
       disabled={disabled}
-      className="py-1 h-6 px-4 outline-none text-sm flex border-none transition-colors cursor-pointer hover:bg-transparent [&_svg]:size-5"
+      className="py-1 h-6 px-4 outline-none text-sm flex border-none transition-colors cursor-pointer hover:bg-transparent [&_svg]:size-6"
       onClick={onClick}
     >
       <HiOutlineDocumentCheck className="inline" />
