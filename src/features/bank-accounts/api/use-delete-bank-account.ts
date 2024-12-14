@@ -9,7 +9,7 @@ type Route = (typeof client.api)['bank-accounts'][':bankAccountId']['$delete']
 type RequestType = InferRequestType<Route>
 type ResponseType = InferResponseType<Route>
 
-export function useUpdateBankAccount() {
+export function useDeleteBankAccount() {
   const queryClient = useQueryClient()
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
