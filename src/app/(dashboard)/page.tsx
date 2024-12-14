@@ -7,6 +7,7 @@ import { Transactions } from '@/features/transactions/components/transactions'
 import { DashboardProvider } from '@/contexts/dashboard-context'
 import { Fab } from '@/components/fab'
 import { CreateTransactionModal } from '@/features/transactions/components/modals/create-transaction-modal'
+import { CreateBankAccountModal } from '@/features/bank-accounts/components/modals/create-bank-account-modal'
 
 export default async function Dashboard() {
   const user = await auth()
@@ -35,6 +36,7 @@ export default async function Dashboard() {
 
         <Fab />
         <CreateTransactionModal />
+        <CreateBankAccountModal />
       </div>
     </DashboardProvider>
   )
