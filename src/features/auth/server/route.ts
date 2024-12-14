@@ -7,13 +7,18 @@ import { compare, hash } from 'bcryptjs'
 import { env } from '@/lib/config'
 import { deleteCookie, setCookie } from 'hono/cookie'
 import { AUTH_COOKIE } from '../constants'
+import { authMiddleware } from '@/lib/auth-middleware'
 
 const app = new Hono()
-  // .get('/current', authMiddleware, async (c) => {
-  //   const user = c.get('user')
+  .get('/current', authMiddleware, async (c) => {
+    const userId = c.get('userId')
 
-  //   return c.json({ data: user })
-  // })
+    const user = prisma.user.findUnique({
+      where: { id: userId }
+    })
+
+    return c.json({ data: user })
+  })
   .post('/login', zValidator('json', apiLoginSchema), async (c) => {
     const { email, password } = c.req.valid('json')
 
