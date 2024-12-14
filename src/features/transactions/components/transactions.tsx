@@ -78,7 +78,7 @@ export function Transactions() {
                 selectedType={filters.type}
               />
 
-              <div className="flex gap-6">
+              <div className="flex gap-3">
                 <SummaryButton
                   onClick={handleOpenSummaryModal}
                   disabled={!hasTransactions || isLoading}

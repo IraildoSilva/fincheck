@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button'
 // import { FileCheck2Icon } from 'lucide-react'
-import { HiOutlineDocumentCheck } from "react-icons/hi2";
-
+import { HiOutlineDocumentCheck } from 'react-icons/hi2'
 
 interface SummaryButtonProps {
   onClick: () => void
@@ -17,7 +16,7 @@ export function SummaryButton({ onClick, disabled }: SummaryButtonProps) {
       onClick={onClick}
     >
       <HiOutlineDocumentCheck className="inline" />
-      <span>Resumo</span>
+      <span className="hidden lg:inline">Resumo</span>
     </Button>
   )
 }
