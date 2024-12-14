@@ -69,7 +69,12 @@ export function ColorsDropdownInput({
             )}
           >
             Cor
-            <div className="absolute top-1/2 -translate-y-1/2 right-3 [&_svg]:size-6">
+            <div
+              className={cn(
+                'absolute top-1/2 -translate-y-1/2 right-3 [&_svg]:size-4',
+                selectedColor && '[&_svg]:size-6'
+              )}
+            >
               {selectedColor && (
                 <ColorIcon bg={selectedColor.bg} color={selectedColor.color} />
               )}
@@ -84,7 +89,7 @@ export function ColorsDropdownInput({
             <DropdownMenuItem
               key={color.color}
               onSelect={() => handleSelectedColor(color)}
-							className='[&_svg]:size-8 flex items-center justify-center'
+              className="[&_svg]:size-8 flex items-center justify-center"
             >
               <ColorIcon bg={color.bg} color={color.color} />
             </DropdownMenuItem>
