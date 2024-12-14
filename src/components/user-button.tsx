@@ -18,16 +18,13 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 import { useLogout } from '@/features/auth/api/use-logout'
-import { User } from '@/entities/User'
+import { useCurrent } from '@/features/auth/api/use-current'
 
-interface UserButtonProps {
-  isLoading?: boolean
-  user: User
-}
-
-export function UserButton({ isLoading, user }: UserButtonProps) {
+export function UserButton() {
   const { setTheme } = useTheme()
   const { mutate: handleLogout } = useLogout()
+
+  const { data: user, isFetching: isLoading } = useCurrent()
 
   const avatar = user?.name.slice(0, 2).toUpperCase()
 
