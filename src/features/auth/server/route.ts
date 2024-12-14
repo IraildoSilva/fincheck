@@ -13,8 +13,13 @@ const app = new Hono()
   .get('/current', authMiddleware, async (c) => {
     const userId = c.get('userId')
 
-    const user = prisma.user.findUnique({
-      where: { id: userId }
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
     })
 
     return c.json({ data: user })
