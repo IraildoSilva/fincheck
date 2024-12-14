@@ -30,7 +30,7 @@ export function ConfirmDeleteModal({
           <p className="w-[180px] font-bold tracking-[-0.5px]">{title}</p>
 
           {description && (
-            <p className="tracking-[-0.5px] text-gray-800">{description}</p>
+            <p className="tracking-[-0.5px]">{description}</p>
           )}
         </CardHeader>
 

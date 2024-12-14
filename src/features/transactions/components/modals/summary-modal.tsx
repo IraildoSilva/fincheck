@@ -43,26 +43,31 @@ export function SummaryModal({
         </CardHeader>
 
         <CardContent>
-          <h1 className="text-xl mb-20 font-semibold tracking-[-0.5px]">
-            {currentMonth}
-          </h1>
+          <div className='text-center w-full flex items-center justify-center'>
+            <p className="w-[200px] mb-20 font-medium tracking-[-0.5px] text-muted-foreground">
+              Resumo da suas transacões em{' '}
+              <span className="text-foreground font-semibold">
+                {currentMonth}
+              </span>
+            </p>
+          </div>
 
           <div>
             <div className="flex justify-between items-center">
-              <span className='text-muted-foreground'>Total receitas</span>
+              <span className="text-muted-foreground">Total receitas</span>
               <strong className="text-emerald-500 tracking-[-0.5px] font-medium">
                 + {formatCurrency(totalIncome)}
               </strong>
             </div>
             <div className="flex justify-between items-center">
-              <span className='text-muted-foreground'>Total despesas </span>
+              <span className="text-muted-foreground">Total despesas </span>
               <span className="text-red-500 tracking-[-0.5px] font-medium">
                 - {formatCurrency(totalExpense)}
               </span>
             </div>
             <Separator className="my-2 bg-gray-600" />
             <div className="flex justify-between items-center">
-              <span>Saldo</span>
+              <span className="font-semibold">Saldo</span>
               <span
                 className={cn(
                   'tracking-[-0.5px] text-emerald-500 font-medium',
