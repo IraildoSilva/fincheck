@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { QUERY_KEYS } from '../constants'
+import { QUERY_KEYS as ACCOUNT_QUERY_KEYS } from '@/features/bank-accounts/constants'
 
 type Route = typeof client.api.auth.register.$post
 
@@ -26,6 +27,7 @@ export function useRegister() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.current })
+      queryClient.invalidateQueries({ queryKey: ACCOUNT_QUERY_KEYS.bankAccounts})
       router.push('/')
     },
     onError: () => {
