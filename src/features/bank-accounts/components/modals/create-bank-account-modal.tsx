@@ -34,7 +34,7 @@ const schema = z.object({
     .min(1, 'Saldo inicial é obrigatório'),
   name: z.string().min(1, 'Nome é obrigatório'),
   type: z.enum(['CHECKING', 'INVESTMENT', 'CASH'], {
-    description: 'Tipo é obrigatório',
+    message: 'Tipo da conta é obrigatório',
   }),
   color: z.string().min(1, 'Cor é obrigatória'),
 })
@@ -50,7 +50,7 @@ export function CreateBankAccountModal() {
       color: '',
       name: '',
       initialBalance: '0',
-      type: 'CHECKING',
+      type: '' as 'CHECKING',
     },
   })
 
@@ -64,8 +64,8 @@ export function CreateBankAccountModal() {
       },
     })
 
-		closeNewAccountModal()
-		form.reset()
+    closeNewAccountModal()
+    form.reset()
   }
 
   return (
@@ -136,7 +136,13 @@ export function CreateBankAccountModal() {
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder={'Tipo'} />
+                            <SelectValue
+                              placeholder={
+                                <span className="text-muted-foreground">
+                                  Tipo de conta
+                                </span>
+                              }
+                            />
                           </SelectTrigger>
                         </FormControl>
 
