@@ -14,6 +14,8 @@ import { TransactionTypeDropdown } from './transactions-type-drowdown'
 import { FiltersModal } from './filters-modal'
 import { FilterIcon } from './filter-icon'
 import { EditTransactionModal } from './modals/edit-transaction-modal'
+import { SummaryModal } from './modals/summary-modal'
+import { SummaryButton } from './summary-button'
 
 export function Transactions() {
   const {
@@ -33,9 +35,9 @@ export function Transactions() {
     handleCloseEditModal,
     isEditModalOpen,
     transactionBeingEdited,
-    // handleOpenSummaryModal,
-    // handleCloseSummaryModal,
-    // isSummaryModalOpen,
+    handleOpenSummaryModal,
+    handleCloseSummaryModal,
+    isSummaryModalOpen,
   } = useTransactions()
 
   const hasTransactions = transactions.length > 0
@@ -61,13 +63,13 @@ export function Transactions() {
             onClose={handleCloseFiltersModal}
           />
 
-          {/* {hasTransactions && (
+          {hasTransactions && (
             <SummaryModal
               open={isSummaryModalOpen}
               onClose={handleCloseSummaryModal}
               transactions={transactions}
             />
-          )} */}
+          )}
 
           <header>
             <div className="flex justify-between items-center">
@@ -77,10 +79,10 @@ export function Transactions() {
               />
 
               <div className="flex gap-6">
-                {/* <SummaryButton
+                <SummaryButton
                   onClick={handleOpenSummaryModal}
-                  disabled={!hasTransactions}
-                /> */}
+                  disabled={!hasTransactions || isLoading}
+                />
 
                 <button onClick={handleOpenFiltersModal}>
                   <FilterIcon />
