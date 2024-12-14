@@ -86,7 +86,7 @@ export function CreateBankAccountModal() {
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div>
                 <span className="text-muted-foreground text-xs">
-                  saldo inicial
+                  Saldo inicial
                 </span>
 
                 <div className="flex items-center justify-center gap-2">
