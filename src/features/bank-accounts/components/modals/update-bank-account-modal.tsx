@@ -49,7 +49,6 @@ export function UpdateBankAccountModal() {
   const { isEditAccountModalOpen, closeEditAccountModal, accountBeingEdited } =
     useDashboard()
 
-  console.log(isEditAccountModalOpen)
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -138,7 +137,11 @@ export function UpdateBankAccountModal() {
                     name="initialBalance"
                     render={({ field: { onChange, value } }) => (
                       <FormItem>
-                        <InputCurrency onChange={onChange} value={value} disabled/>
+                        <InputCurrency
+                          onChange={onChange}
+                          value={value}
+                          disabled
+                        />
                         <FormMessage />
                       </FormItem>
                     )}

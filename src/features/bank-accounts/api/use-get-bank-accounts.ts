@@ -19,8 +19,6 @@ export function useGetBankAccounts() {
     staleTime: Infinity,
   })
 
-  console.log({ data })
-
   return {
     accounts: data || [],
     isFetching,

@@ -1,3 +1,5 @@
+'server only'
+
 import { User } from '@/entities/User'
 import { cookies } from 'next/headers'
 import { AUTH_COOKIE } from './constants'
