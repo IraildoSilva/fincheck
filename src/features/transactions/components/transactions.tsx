@@ -16,6 +16,7 @@ import { FilterIcon } from './filter-icon'
 import { EditTransactionModal } from './modals/edit-transaction-modal'
 import { SummaryModal } from './modals/summary-modal'
 import { SummaryButton } from './summary-button'
+import { EmptyState } from './empty-state'
 
 export function Transactions() {
   const {
@@ -134,9 +135,9 @@ export function Transactions() {
 
             {!hasTransactions && !isLoading && (
               <div className="flex flex-col h-full items-center justify-center">
-                {/* <img src={emptyState} alt="Empty State" /> */}
+                <EmptyState />
 
-                <p className="text-gray-700">
+                <p className="text-muted-foreground">
                   Não encontramos nenhuma transação!
                 </p>
               </div>
