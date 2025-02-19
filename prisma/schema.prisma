@@ -70,7 +70,7 @@ model Transaction {
   name          String
   value         Float
   date          DateTime
-  createdAt     DateTime?       @default(now())
+  createdAt     DateTime        @default(now())
   type          TransactionType
 
   user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
