@@ -3,6 +3,7 @@ export interface Transaction {
   name: string
   value: number
   date: string
+  createdAt: string
   type: 'INCOME' | 'EXPENSE'
   categoryId: string | null
   bankAccountId: string
