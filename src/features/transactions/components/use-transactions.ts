@@ -37,10 +37,17 @@ export function useTransactions() {
   } = useGetTransactions(filters) //TODO Send filters in the request
 
   const sortedTransactions = transactions?.sort((a, b) => {
-    const aSide = new Date(a.date).getTime()
-    const bSide = new Date(b.date).getTime()
+    const ADate = new Date(a.date).getTime()
+    const BDate = new Date(b.date).getTime()
 
-    return bSide - aSide
+    if (ADate === BDate) {
+      const ACreatedAt = new Date(a.createdAt).getTime()
+      const BCreatedAt = new Date(b.createdAt).getTime()
+
+      return BCreatedAt - ACreatedAt
+    }
+
+    return BDate - ADate
   })
 
   useEffect(() => {
