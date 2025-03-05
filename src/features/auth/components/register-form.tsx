@@ -58,7 +58,7 @@ export function RegisterForm() {
           </Link>{' '}
           e{' '}
           <Link
-            href={'#'}
+            href={'/terms'}
             className="underline text-secondary-foreground hover:opacity-80 transition"
           >
             Termos de serviço
