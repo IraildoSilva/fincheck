@@ -9,7 +9,7 @@ interface LegalLayoutProps {
 export default function LegalLayout({ children }: LegalLayoutProps) {
   return (
     <>
-      <div className="max-h-screen px-20 flex flex-col gap-y-6 xl:max-w-7xl mx-auto">
+      <div className="max-h-screen md:px-20 px-8 flex flex-col gap-y-6 xl:max-w-7xl mx-auto">
         <header className="pt-10 flex justify-between">
           <div className="space-y-5">
             <h1 className="text-primary text-3xl font-bold">Termos de Serviço</h1>
