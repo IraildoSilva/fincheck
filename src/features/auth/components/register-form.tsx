@@ -51,7 +51,7 @@ export function RegisterForm() {
         <CardDescription>
           Ao criar sua conta, você concorda com nossa{' '}
           <Link
-            href={'#'}
+            href={'/privacy-policy'}
             className="underline text-secondary-foreground hover:opacity-80 transition"
           >
             Politica de Privacidade
