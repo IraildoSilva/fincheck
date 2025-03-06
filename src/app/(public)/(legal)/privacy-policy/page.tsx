@@ -6,8 +6,9 @@ export default function PrivacyPolicyPage() {
           1. Informações Coletadas Coletamos os seguintes tipos de informações:
         </h2>
         <p className="mb-4 text-muted-foreground">
-          Informações de perfil (nome, e-mail) Dados de eventos e despesas
-          Informações de uso do aplicativo Dados de dispositivo e navegador
+          Informações de perfil (nome, e-mail), saldo cadastrado das contas,
+          despesas e receitas, informações de uso do aplicativo dados de
+          dispositivo e navegador
         </p>
       </section>
 
@@ -59,7 +60,7 @@ export default function PrivacyPolicyPage() {
       <section className="mb-8">
         <h2 className="text-xl font-semibold mb-3">6. Cookies e tecnologias</h2>
         <p className="mb-4 text-muted-foreground">
-          Utilizamos cookies e tecnologias similares paraL:
+          Utilizamos cookies e tecnologias similares para:
         </p>
 
         <ul className="list-disc pl-6 mb-4 text-muted-foreground">
