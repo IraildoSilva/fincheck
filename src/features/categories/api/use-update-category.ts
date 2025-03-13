@@ -9,7 +9,7 @@ type Route = (typeof client.api)['categories'][':categoryId']['$put']
 type RequestType = InferRequestType<Route>
 type ResponseType = InferResponseType<Route>
 
-export function useUpdateBankAccount() {
+export function useUpdateCategory() {
   const queryClient = useQueryClient()
 
   const mutation = useMutation<ResponseType, Error, RequestType>({

@@ -186,8 +186,14 @@ export function Transactions() {
                           <span className="text-xs leading-1">
                             {transaction.category?.name}
                           </span>
-                          <span className="text-xs leading-none">
-                            {formatDate(new Date(transaction.date))}{' '}
+
+                          <span
+                            className={cn(
+                              'text-xs leading-none',
+                              !transaction.category && 'leading-1'
+                            )}
+                          >
+                            {formatDate(new Date(transaction.date))}
                           </span>
                         </div>
                       </div>

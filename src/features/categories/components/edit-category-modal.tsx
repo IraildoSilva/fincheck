@@ -23,6 +23,7 @@ import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { useDeleteCategory } from '../api/use-delete-category'
 
 interface UpdateCategoryModalProps {
   open: boolean
@@ -58,18 +59,26 @@ export function EditCategoryModal({
     console.log(data)
   }
 
+  const { mutateAsync: deleteCategory, isPending: isDeleting } = useDeleteCategory()
+ 
+  async function handleDeleteCategory() {
+    await deleteCategory({ param: { categoryId: categoryBeingEdited.id } })
+  }
+
   const isPending = false
 
   function handleDeleteModalOpen() {
     setIsDeleteModalOpen((prevState) => !prevState)
+
+    onClose()
   }
 
   if (isDeleteModalOpen) {
     return (
       <ConfirmDeleteModal
-        isLoading={false}
+        isLoading={isDeleting}
         onClose={handleDeleteModalOpen}
-        onConfirm={() => console.log('Deleted')}
+        onConfirm={handleDeleteCategory}
         title="Tem certeza que deseja excluir essa categoria?"
         description="Ao excluir a categoria, todas as transações relacionadas serão modificadas"
       />

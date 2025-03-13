@@ -10,7 +10,7 @@ type Route = (typeof client.api)['categories'][':categoryId']['$delete']
 type RequestType = InferRequestType<Route>
 type ResponseType = InferResponseType<Route>
 
-export function useDeleteBankAccount() {
+export function useDeleteCategory() {
   const queryClient = useQueryClient()
 
   const mutation = useMutation<ResponseType, Error, RequestType>({

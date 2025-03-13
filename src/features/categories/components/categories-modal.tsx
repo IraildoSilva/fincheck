@@ -17,6 +17,7 @@ import { CreateCategoryModal } from './create-category-modal'
 import { ConfirmDeleteModal } from '@/components/confirm-delete-modal'
 import { Category } from '@prisma/client'
 import { EditCategoryModal } from './edit-category-modal'
+import { useDeleteCategory } from '../api/use-delete-category'
 
 interface CategoriesModalProps {
   open: boolean
@@ -32,6 +33,8 @@ export function CategoriesModal({ open, onClose }: CategoriesModalProps) {
   const [categoryBeingEdited, setCategoryBeingEdited] =
     useState<Category | null>(null)
   const [categoryFilter, setCategoryFilter] = useState('INCOME')
+  const [categoryBeingDeleted, setCategoryBeingDeleted] =
+    useState<Category | null>(null)
   const { data: categories, isFetching } = useGetCategories()
 
   function handleCategoryFilter(type: 'INCOME' | 'EXPENSE') {
@@ -46,9 +49,10 @@ export function CategoriesModal({ open, onClose }: CategoriesModalProps) {
     setIsCreateCategoryModalOpen((prevState) => !prevState)
   }
 
-  function handleDeleteModalOpen(event: MouseEvent) {
+  function handleDeleteModalOpen(event: MouseEvent, category: Category) {
     event.stopPropagation()
     setIsDeleteModalOpen(true)
+    setCategoryBeingDeleted(category)
   }
 
   function handleDeleteModalClose() {
@@ -64,12 +68,22 @@ export function CategoriesModal({ open, onClose }: CategoriesModalProps) {
     setIsUpdateCategoryModalOpen(false)
   }
 
+  const { mutateAsync: deleteCategory, isPending } = useDeleteCategory()
+
+  async function handleDeleteCategory() {
+    if(!categoryBeingDeleted) return
+
+    await deleteCategory({ param: { categoryId: categoryBeingDeleted.id } })
+
+    handleDeleteModalClose()
+  }
+
   if (isDeleteModalOpen) {
     return (
       <ConfirmDeleteModal
-        isLoading={false}
+        isLoading={isPending}
         onClose={handleDeleteModalClose}
-        onConfirm={() => console.log('Deleted')}
+        onConfirm={handleDeleteCategory}
         title="Tem certeza que deseja excluir essa categoria?"
         description="Ao excluir a categoria, todas as transações relacionadas serão modificadas"
       />
@@ -167,7 +181,9 @@ export function CategoriesModal({ open, onClose }: CategoriesModalProps) {
                       variant={'destructive'}
                       size={'icon'}
                       className="bg-red-500 rounded-l-none"
-                      onClick={handleDeleteModalOpen}
+                      onClick={(event) =>
+                        handleDeleteModalOpen(event, category)
+                      }
                     >
                       <TrashIcon />
                     </Button>
