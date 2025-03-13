@@ -21,6 +21,7 @@ import { TransactionType } from '@prisma/client'
 import { Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { useCreateCategory } from '../api/use-create-category'
 
 interface CreateCategoryModalProps {
   open: boolean
@@ -48,11 +49,13 @@ export function CreateCategoryModal({
     resolver: zodResolver(schema),
   })
 
-  function onSubmit(data: FormData) {
-    console.log(data)
-  }
+  const { mutateAsync: createCategory, isPending } = useCreateCategory()
 
-  const isPending = false
+  async function onSubmit(data: FormData) {
+    await createCategory({ json: { ...data } })
+
+    onClose()
+  }
 
   return (
     <ResponsiveModal

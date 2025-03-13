@@ -156,7 +156,6 @@ export function CategoriesModal({ open, onClose }: CategoriesModalProps) {
                     key={category.id}
                     className="border border-gray-200/60 dark:border-muted rounded-md h-10 pl-4 flex  items-center justify-between hover:bg-accent cursor-pointer"
                     onClick={() => handleUpdateCategory(category)}
-                    role={'button'}
                   >
                     <div className="flex items-center justify-between w-full pr-4">
                       <span className="text-sm font-medium">
