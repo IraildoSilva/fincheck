@@ -14,6 +14,7 @@ import {
 import { useMemo, useState } from 'react'
 import { PlusIcon } from 'lucide-react'
 import { CreateCategoryModal } from './create-category-modal'
+import { ConfirmDeleteModal } from '@/components/confirm-delete-modal'
 
 interface CategoriesModalProps {
   open: boolean
@@ -23,6 +24,7 @@ interface CategoriesModalProps {
 export function CategoriesModal({ open, onClose }: CategoriesModalProps) {
   const [isCreateCategoryModalOpen, setIsCreateCategoryModalOpen] =
     useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [categoryFilter, setCategoryFilter] = useState('INCOME')
   const { data: categories, isFetching } = useGetCategories()
 
@@ -38,13 +40,34 @@ export function CategoriesModal({ open, onClose }: CategoriesModalProps) {
     setIsCreateCategoryModalOpen((prevState) => !prevState)
   }
 
-  const hasCategories = filteredCategories && !isFetching
-  return (
-    <>
+  function handleDeleteModalOpen() {
+    return setIsDeleteModalOpen((prevState) => !prevState)
+  }
+
+  if (isDeleteModalOpen) {
+    return (
+      <ConfirmDeleteModal
+        isLoading={false}
+        onClose={handleDeleteModalOpen}
+        onConfirm={() => console.log('Deleted')}
+        title="Tem certeza que deseja excluir essa categoria?"
+        description="Ao excluir a categoria, todas as transações relacionadas serão modificadas"
+      />
+    )
+  }
+
+  if (isCreateCategoryModalOpen) {
+    return (
       <CreateCategoryModal
         open={isCreateCategoryModalOpen}
         onClose={handleCreateCategoryModalOpen}
       />
+    )
+  }
+
+  const hasCategories = filteredCategories && !isFetching
+  return (
+    <>
       <ResponsiveModal
         open={open}
         onOpenChange={onClose}
@@ -76,7 +99,11 @@ export function CategoriesModal({ open, onClose }: CategoriesModalProps) {
                   </Select>
                 </div>
               </div>
-              <Button size={'default'} variant={'outline'} onClick={handleCreateCategoryModalOpen}>
+              <Button
+                size={'default'}
+                variant={'outline'}
+                onClick={handleCreateCategoryModalOpen}
+              >
                 <PlusIcon />
                 Criar Categoria
               </Button>
@@ -109,6 +136,7 @@ export function CategoriesModal({ open, onClose }: CategoriesModalProps) {
                       variant={'destructive'}
                       size={'icon'}
                       className="bg-red-500 rounded-l-none"
+                      onClick={handleDeleteModalOpen}
                     >
                       <TrashIcon />
                     </Button>
