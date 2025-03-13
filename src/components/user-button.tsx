@@ -27,7 +27,7 @@ import {
 import { useLogout } from '@/features/auth/api/use-logout'
 import { useCurrent } from '@/features/auth/api/use-current'
 import { useState } from 'react'
-import { CategoriesModal } from '@/features/categories/components/CategoriesModal'
+import { CategoriesModal } from '@/features/categories/components/categories-modal'
 
 export function UserButton() {
   const [isCategoriesModalOpen, setIsCategoryModalOpen] = useState(false)
