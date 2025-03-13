@@ -11,10 +11,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useMemo, useState } from 'react'
+import { MouseEvent, useMemo, useState } from 'react'
 import { PlusIcon } from 'lucide-react'
 import { CreateCategoryModal } from './create-category-modal'
 import { ConfirmDeleteModal } from '@/components/confirm-delete-modal'
+import { Category } from '@prisma/client'
+import { EditCategoryModal } from './edit-category-modal'
 
 interface CategoriesModalProps {
   open: boolean
@@ -25,6 +27,10 @@ export function CategoriesModal({ open, onClose }: CategoriesModalProps) {
   const [isCreateCategoryModalOpen, setIsCreateCategoryModalOpen] =
     useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isUpdateCategoryModalOpen, setIsUpdateCategoryModalOpen] =
+    useState(false)
+  const [categoryBeingEdited, setCategoryBeingEdited] =
+    useState<Category | null>(null)
   const [categoryFilter, setCategoryFilter] = useState('INCOME')
   const { data: categories, isFetching } = useGetCategories()
 
@@ -40,15 +46,29 @@ export function CategoriesModal({ open, onClose }: CategoriesModalProps) {
     setIsCreateCategoryModalOpen((prevState) => !prevState)
   }
 
-  function handleDeleteModalOpen() {
-    return setIsDeleteModalOpen((prevState) => !prevState)
+  function handleDeleteModalOpen(event: MouseEvent) {
+    event.stopPropagation()
+    setIsDeleteModalOpen(true)
+  }
+
+  function handleDeleteModalClose() {
+    setIsDeleteModalOpen(false)
+  }
+
+  function handleUpdateCategory(category: Category) {
+    setIsUpdateCategoryModalOpen(true)
+    setCategoryBeingEdited(category)
+  }
+
+  function handleUpdateCategoryModalClose() {
+    setIsUpdateCategoryModalOpen(false)
   }
 
   if (isDeleteModalOpen) {
     return (
       <ConfirmDeleteModal
         isLoading={false}
-        onClose={handleDeleteModalOpen}
+        onClose={handleDeleteModalClose}
         onConfirm={() => console.log('Deleted')}
         title="Tem certeza que deseja excluir essa categoria?"
         description="Ao excluir a categoria, todas as transações relacionadas serão modificadas"
@@ -61,6 +81,16 @@ export function CategoriesModal({ open, onClose }: CategoriesModalProps) {
       <CreateCategoryModal
         open={isCreateCategoryModalOpen}
         onClose={handleCreateCategoryModalOpen}
+      />
+    )
+  }
+
+  if (categoryBeingEdited && isUpdateCategoryModalOpen) {
+    return (
+      <EditCategoryModal
+        open={isUpdateCategoryModalOpen}
+        onClose={handleUpdateCategoryModalClose}
+        categoryBeingEdited={categoryBeingEdited}
       />
     )
   }
@@ -125,6 +155,8 @@ export function CategoriesModal({ open, onClose }: CategoriesModalProps) {
                   <div
                     key={category.id}
                     className="border border-gray-200/60 dark:border-muted rounded-md h-10 pl-4 flex  items-center justify-between hover:bg-accent cursor-pointer"
+                    onClick={() => handleUpdateCategory(category)}
+                    role={'button'}
                   >
                     <div className="flex items-center justify-between w-full pr-4">
                       <span className="text-sm font-medium">
