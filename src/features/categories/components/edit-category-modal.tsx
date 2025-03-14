@@ -24,6 +24,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { useDeleteCategory } from '../api/use-delete-category'
+import { useUpdateCategory } from '../api/use-update-category'
 
 interface UpdateCategoryModalProps {
   open: boolean
@@ -55,22 +56,27 @@ export function EditCategoryModal({
     resolver: zodResolver(schema),
   })
 
-  function onSubmit(data: FormData) {
-    console.log(data)
+  const { mutateAsync: updateCategory, isPending } = useUpdateCategory()
+  const { mutateAsync: deleteCategory, isPending: isDeleting } =
+    useDeleteCategory()
+
+  async function onSubmit(data: FormData) {
+    await updateCategory({
+      param: { categoryId: categoryBeingEdited.id },
+      json: { ...data },
+    })
+
+    onClose()
   }
 
-  const { mutateAsync: deleteCategory, isPending: isDeleting } = useDeleteCategory()
- 
   async function handleDeleteCategory() {
     await deleteCategory({ param: { categoryId: categoryBeingEdited.id } })
-  }
 
-  const isPending = false
+    onClose()
+  }
 
   function handleDeleteModalOpen() {
     setIsDeleteModalOpen((prevState) => !prevState)
-
-    onClose()
   }
 
   if (isDeleteModalOpen) {

@@ -71,7 +71,7 @@ export function CategoriesModal({ open, onClose }: CategoriesModalProps) {
   const { mutateAsync: deleteCategory, isPending } = useDeleteCategory()
 
   async function handleDeleteCategory() {
-    if(!categoryBeingDeleted) return
+    if (!categoryBeingDeleted) return
 
     await deleteCategory({ param: { categoryId: categoryBeingDeleted.id } })
 
@@ -130,11 +130,11 @@ export function CategoriesModal({ open, onClose }: CategoriesModalProps) {
                 <span className="text-sm">Filtrar por: </span>
                 <div className="w-28">
                   <Select
-                    defaultValue="INCOME"
+                    defaultValue={categoryFilter}
                     onValueChange={handleCategoryFilter}
                   >
-                    <SelectTrigger>
-                      <SelectValue placeholder={'Receita'} />
+                    <SelectTrigger className="focus:ring-0">
+                      <SelectValue placeholder={'Tipo de categoria..'} />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="INCOME">Receita</SelectItem>
