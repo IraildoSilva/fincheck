@@ -5,10 +5,11 @@ import { useTheme } from 'next-themes'
 import {
   Loader2,
   LogOutIcon,
-  Moon,
   Settings2Icon,
-  Sun,
   UserIcon,
+  Laptop2,
+  MoonIcon,
+  SunIcon,
 } from 'lucide-react'
 
 import { Avatar, AvatarFallback } from './ui/avatar'
@@ -90,29 +91,32 @@ export function UserButton() {
           </DropdownMenuItem>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger className="md:flex">
-              <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
               Tema
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent className="">
                 <DropdownMenuItem
-                  className="flex items-center justify-between "
+                  className="flex items-center"
                   onClick={() => setTheme('light')}
                 >
-                  Light
+                  <SunIcon />
+                  Claro
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  className="flex items-center justify-between "
+                  className="flex items-center"
                   onClick={() => setTheme('dark')}
                 >
-                  Dark
+                  <MoonIcon />
+                  Escuro
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  className="flex items-center justify-between "
+                  className="flex items-center"
                   onClick={() => setTheme('system')}
                 >
-                  System
+                  <Laptop2 />
+                  Sistema
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>

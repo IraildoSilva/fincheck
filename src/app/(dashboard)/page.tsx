@@ -9,6 +9,7 @@ import { CreateBankAccountModal } from '@/features/bank-accounts/components/moda
 import { UpdateBankAccountModal } from '@/features/bank-accounts/components/modals/update-bank-account-modal'
 import { useDashboard } from '@/hooks/use-dashboard'
 import { UserButton } from '@/components/user-button'
+import { ToggleTheme } from '@/components/toggle-theme'
 
 export default function Dashboard() {
   const { accountBeingEdited } = useDashboard()
@@ -18,7 +19,10 @@ export default function Dashboard() {
       <header className="h-12 flex items-center justify-between">
         <Logo className="text-primary h-6" />
 
-        <UserButton />
+        <div className='flex items-center justify-center gap-x-2'>
+          <ToggleTheme/>
+          <UserButton />
+        </div>
       </header>
 
       <main className="flex-1 flex flex-col lg:flex-row gap-4 lg:pr-4 max-h-[calc(100%-64px)]">
