@@ -7,7 +7,6 @@ import {
   LogOutIcon,
   Settings2Icon,
   UserIcon,
-  Laptop2,
   MoonIcon,
   SunIcon,
 } from 'lucide-react'
@@ -29,6 +28,7 @@ import { useLogout } from '@/features/auth/api/use-logout'
 import { useCurrent } from '@/features/auth/api/use-current'
 import { useState } from 'react'
 import { CategoriesModal } from '@/features/categories/components/categories-modal'
+import { themes } from './constants/themes'
 
 export function UserButton() {
   const [isCategoriesModalOpen, setIsCategoryModalOpen] = useState(false)
@@ -97,27 +97,15 @@ export function UserButton() {
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent className="">
-                <DropdownMenuItem
-                  className="flex items-center"
-                  onClick={() => setTheme('light')}
-                >
-                  <SunIcon />
-                  Claro
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className="flex items-center"
-                  onClick={() => setTheme('dark')}
-                >
-                  <MoonIcon />
-                  Escuro
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className="flex items-center"
-                  onClick={() => setTheme('system')}
-                >
-                  <Laptop2 />
-                  Sistema
-                </DropdownMenuItem>
+                {themes.map((theme) => (
+                  <DropdownMenuItem
+                    key={theme.key}
+                    onClick={() => setTheme(theme.key)}
+                  >
+                    <theme.Icon />
+                    {theme.name}
+                  </DropdownMenuItem>
+                ))}
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
