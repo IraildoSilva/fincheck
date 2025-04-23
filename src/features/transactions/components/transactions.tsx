@@ -162,7 +162,7 @@ export function Transactions() {
                     <div className="flex items-center gap-3">
                       <CategoryIcon
                         type={
-                          transaction.type === 'INCOME' ? 'income' : 'expense'
+                          transaction.type === 'INCOME' ? 'income' : transaction.type === 'EXPENSE' ?  'expense' : 'transfer'
                         }
                         category={transaction.category?.icon}
                       />

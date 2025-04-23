@@ -9,7 +9,7 @@ export type TransactionsFilters = {
   month: number
   year: number
   bankAccountId?: string
-  type?: 'INCOME' | 'EXPENSE'
+  type?: 'INCOME' | 'EXPENSE' | 'TRANSFER'
 }
 
 export function useTransactions() {

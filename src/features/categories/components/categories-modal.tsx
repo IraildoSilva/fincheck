@@ -37,7 +37,7 @@ export function CategoriesModal({ open, onClose }: CategoriesModalProps) {
     useState<Category | null>(null)
   const { data: categories, isFetching } = useGetCategories()
 
-  function handleCategoryFilter(type: 'INCOME' | 'EXPENSE') {
+  function handleCategoryFilter(type: 'INCOME' | 'EXPENSE' | 'TRANSFER') {
     setCategoryFilter(type)
   }
 

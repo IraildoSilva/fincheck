@@ -9,11 +9,15 @@ import { Transport } from './expense/transport'
 import { Travel } from './expense/travel'
 import { Income } from './income/income'
 import { Shopee } from './income/shopee'
+import { Transfer } from './transfer/transfer'
 
 export const iconsMap = {
   income: {
     default: Income,
     shopee: Shopee,
+  },
+  transfer: {
+    default: Transfer,
   },
   expense: {
     default: Expense,

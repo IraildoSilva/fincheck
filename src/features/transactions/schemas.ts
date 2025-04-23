@@ -4,7 +4,7 @@ export const filtersSchema = z.object({
   month: z.string(),
   year: z.string(),
   bankAccountId: z.string().uuid().optional(),
-  type: z.enum(['INCOME', 'EXPENSE']).optional(),
+  type: z.enum(['INCOME', 'EXPENSE', 'TRANSFER']).optional(),
 })
 
 export const transactionSchema = z.object({
@@ -13,7 +13,7 @@ export const transactionSchema = z.object({
   name: z.string(),
   value: z.number().positive(),
   date: z.string(),
-  type: z.enum(['INCOME', 'EXPENSE']),
+  type: z.enum(['INCOME', 'EXPENSE', 'TRANSFER']),
 })
 
 export const transactionIdSchema = z.object({
