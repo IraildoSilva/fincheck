@@ -35,7 +35,9 @@ model BankAccount {
   initialBalance Float           @map("initial_balance")
   type           BankAccountType
   color          String
-  transactions   Transaction[]
+
+  transactionsFrom Transaction[] @relation("FromBankAccount")
+  transactionsTo   Transaction[] @relation("ToBankAccount")
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -45,6 +47,7 @@ model BankAccount {
 enum TransactionType {
   INCOME
   EXPENSE
+  TRANSFER
 
   @@map("transation_type")
 }
@@ -63,19 +66,21 @@ model Category {
 }
 
 model Transaction {
-  id            String          @id @default(uuid()) @db.Uuid
-  userId        String          @map("user_id") @db.Uuid
-  bankAccountId String          @map("bank_account_id") @db.Uuid
-  categoryId    String?         @map("category_id") @db.Uuid
-  name          String
-  value         Float
-  date          DateTime
-  createdAt     DateTime        @default(now())
-  type          TransactionType
+  id              String          @id @default(uuid()) @db.Uuid
+  userId          String          @map("user_id") @db.Uuid
+  bankAccountId   String          @map("bank_account_id") @db.Uuid
+  toBankAccountId String?         @map("to_bank_account_id") @db.Uuid
+  categoryId      String?         @map("category_id") @db.Uuid
+  name            String
+  value           Float
+  date            DateTime
+  createdAt       DateTime        @default(now())
+  type            TransactionType
 
-  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  bankAccount BankAccount @relation(fields: [bankAccountId], references: [id], onDelete: Cascade)
-  category    Category?   @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bankAccount   BankAccount  @relation("FromBankAccount", fields: [bankAccountId], references: [id], onDelete: Cascade)
+  toBankAccount BankAccount? @relation("ToBankAccount", fields: [toBankAccountId], references: [id], onDelete: Cascade)
+  category      Category?    @relation(fields: [categoryId], references: [id], onDelete: SetNull)
 
   @@map("transaction")
 }
