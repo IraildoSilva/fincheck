@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 
 type Route = typeof client.api.transactions.$post
 
-type ResponseType = InferResponseType<Route>
+type ResponseType = InferResponseType<Route, 200>
 type RequestType = InferRequestType<Route>
 
 export function useCreateTransaction() {

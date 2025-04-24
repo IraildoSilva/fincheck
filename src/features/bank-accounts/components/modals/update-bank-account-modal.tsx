@@ -224,7 +224,7 @@ export function UpdateBankAccountModal() {
 
               <Button
                 type="submit"
-                className="mt-6 w-full text-base md:text-sm"
+                className="mt-6 w-full"
                 disabled={isPending}
               >
                 {isPending && <Loader2 className="size-4 animate-spin" />}
@@ -234,7 +234,7 @@ export function UpdateBankAccountModal() {
               <Button
                 variant={'secondary'}
                 type="button"
-                className="mt-2 w-full text-base md:text-sm"
+                className="mt-2 w-full"
                 onClick={handleOpenDeleteModal}
                 disabled={isPending}
               >

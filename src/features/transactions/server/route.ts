@@ -30,6 +30,12 @@ const app = new Hono()
             color: true,
           },
         },
+        toBankAccount: {
+          select: {
+            name: true,
+            color: true,
+          },
+        },
         category: {
           select: {
             id: true,
@@ -40,6 +46,43 @@ const app = new Hono()
       },
     })
 
+    if (bankAccountId) {
+      const data = await prisma.transaction.findMany({
+        where: {
+          userId,
+          toBankAccountId: bankAccountId,
+          type,
+          date: {
+            gte: new Date(Date.UTC(Number(year), Number(month))),
+            lt: new Date(Date.UTC(Number(year), Number(month) + 1)),
+          },
+        },
+        include: {
+          bankAccount: {
+            select: {
+              name: true,
+              color: true,
+            },
+          },
+          toBankAccount: {
+            select: {
+              name: true,
+              color: true,
+            },
+          },
+          category: {
+            select: {
+              id: true,
+              name: true,
+              icon: true,
+            },
+          },
+        },
+      })
+
+      transactions.push(...data)
+    }
+
     return c.json({ data: transactions })
   })
   .post(
@@ -48,13 +91,31 @@ const app = new Hono()
     authMiddleware,
     async (c) => {
       const userId = c.get('userId')
-      const { bankAccountId, categoryId, date, name, type, value } =
-        c.req.valid('json')
+      const {
+        bankAccountId,
+        toBankAccountId,
+        categoryId,
+        date,
+        name,
+        type,
+        value,
+      } = c.req.valid('json')
+
+      if (toBankAccountId === bankAccountId) {
+        return c.json(
+          {
+            error: 'InvalidOperation',
+            message: 'Transfers to the same account are not allowed.',
+          },
+          400
+        )
+      }
 
       const transaction = await prisma.transaction.create({
         data: {
           userId,
           bankAccountId,
+          toBankAccountId: toBankAccountId || null,
           categoryId,
           name,
           value,

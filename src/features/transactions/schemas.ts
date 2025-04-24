@@ -9,6 +9,7 @@ export const filtersSchema = z.object({
 
 export const transactionSchema = z.object({
   bankAccountId: z.string().uuid(),
+  toBankAccountId: z.string().uuid().optional(),
   categoryId: z.string().uuid(),
   name: z.string(),
   value: z.number().positive(),
