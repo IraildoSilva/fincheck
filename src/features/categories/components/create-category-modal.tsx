@@ -108,7 +108,10 @@ export function CreateCategoryModal({
 
                         <SelectContent>
                           <SelectItem value={'INCOME'}>Receita</SelectItem>
-                          <SelectItem value={'EXPENSE'}>Despesa </SelectItem>
+                          <SelectItem value={'EXPENSE'}>Despesa</SelectItem>
+                          <SelectItem value={'TRANSFER'}>
+                            Transferência
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -119,7 +122,7 @@ export function CreateCategoryModal({
 
               <Button
                 type="submit"
-                className="mt-6 w-full text-base md:text-sm"
+                className="mt-6 w-full"
                 disabled={isPending}
               >
                 {isPending && <Loader2 className="size-4 animate-spin" />}

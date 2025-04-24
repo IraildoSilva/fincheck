@@ -11,7 +11,13 @@ const app = new Hono()
     const bankAccounts = await prisma.bankAccount.findMany({
       where: { userId },
       include: {
-        transactions: {
+        transactionsFrom: {
+          select: {
+            value: true,
+            type: true,
+          },
+        },
+        transactionsTo: {
           select: {
             value: true,
             type: true,
@@ -21,17 +27,20 @@ const app = new Hono()
     })
 
     const accountsWithCurrentBalance = bankAccounts.map(
-      ({ transactions, ...bankAccount }) => {
-        const totalTransactions = transactions.reduce(
-          (acc, transaction) =>
-            acc +
-            (transaction.type === 'INCOME'
-              ? transaction.value
-              : -transaction.value),
-          0
-        )
+      ({ transactionsFrom, transactionsTo, ...bankAccount }) => {
+        const totalFrom = transactionsFrom.reduce((acc, tx) => {
+          if (tx.type === 'INCOME') return acc + tx.value
+          if (tx.type === 'EXPENSE') return acc - tx.value
+          if (tx.type === 'TRANSFER') return acc - tx.value // Transferência saindo da conta
+          return acc
+        }, 0)
 
-        const currentBalance = bankAccount.initialBalance + totalTransactions
+        const totalTo = transactionsTo.reduce((acc, tx) => {
+          if (tx.type === 'TRANSFER') return acc + tx.value // Transferência entrando na conta
+          return acc
+        }, 0)
+
+        const currentBalance = bankAccount.initialBalance + totalFrom + totalTo
 
         return {
           ...bankAccount,

@@ -37,7 +37,7 @@ export function CategoriesModal({ open, onClose }: CategoriesModalProps) {
     useState<Category | null>(null)
   const { data: categories, isFetching } = useGetCategories()
 
-  function handleCategoryFilter(type: 'INCOME' | 'EXPENSE') {
+  function handleCategoryFilter(type: 'INCOME' | 'EXPENSE' | 'TRANSFER') {
     setCategoryFilter(type)
   }
 
@@ -128,7 +128,7 @@ export function CategoriesModal({ open, onClose }: CategoriesModalProps) {
             <div className="flex items-center justify-between">
               <div className="flex items-center justify-center gap-x-2">
                 <span className="text-sm">Filtrar por: </span>
-                <div className="w-28">
+                <div className="w-36">
                   <Select
                     defaultValue={categoryFilter}
                     onValueChange={handleCategoryFilter}
@@ -139,14 +139,24 @@ export function CategoriesModal({ open, onClose }: CategoriesModalProps) {
                     <SelectContent>
                       <SelectItem value="INCOME">Receita</SelectItem>
                       <SelectItem value="EXPENSE">Despesa</SelectItem>
+                      <SelectItem value="TRANSFER">Transferência</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
               </div>
               <Button
-                size={'default'}
-                variant={'outline'}
+                size={'icon'}
+                variant={'secondary'}
                 onClick={handleCreateCategoryModalOpen}
+                className="md:hidden"
+              >
+                <PlusIcon />
+              </Button>
+
+              <Button
+                variant={'secondary'}
+                onClick={handleCreateCategoryModalOpen}
+                className="hidden md:flex"
               >
                 <PlusIcon />
                 Criar Categoria

@@ -7,13 +7,13 @@ interface DashboardContextValue {
   areValuesVisible: boolean
   isNewAccountModalOpen: boolean
   isNewTransactionModalOpen: boolean
-  newTransactionType: 'INCOME' | 'EXPENSE' | null
+  newTransactionType: 'INCOME' | 'EXPENSE' | 'TRANSFER' | null
   isEditAccountModalOpen: boolean
   accountBeingEdited: BankAccount | null
   toggleValuesVisibility: () => void
   openNewAccountModal: () => void
   closeNewAccountModal: () => void
-  openNewTransactionModal: (type: 'INCOME' | 'EXPENSE') => void
+  openNewTransactionModal: (type: 'INCOME' | 'EXPENSE' | 'TRANSFER') => void
   closeNewTransactionModal: () => void
   openEditAccountModal: (bankAccount: BankAccount) => void
   closeEditAccountModal: () => void
@@ -31,7 +31,7 @@ export function DashboardProvider({ children }: DashboardProviderProps) {
   const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] =
     useState(false)
   const [newTransactionType, setNewTransactionType] = useState<
-    'INCOME' | 'EXPENSE' | null
+    'INCOME' | 'EXPENSE' | 'TRANSFER' | null
   >(null)
   const [isEditAccountModalOpen, setIsEditAccountModalOpen] = useState(false)
   const [accountBeingEdited, setAccountBeingEdited] =
@@ -49,7 +49,7 @@ export function DashboardProvider({ children }: DashboardProviderProps) {
     setIsNewAccountModalOpen(false)
   }, [])
 
-  const openNewTransactionModal = useCallback((type: 'INCOME' | 'EXPENSE') => {
+  const openNewTransactionModal = useCallback((type: 'INCOME' | 'EXPENSE' | 'TRANSFER') => {
     setNewTransactionType(type)
     setIsNewTransactionModalOpen(true)
   }, [])

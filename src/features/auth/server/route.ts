@@ -84,6 +84,8 @@ const app = new Hono()
         categories: {
           createMany: {
             data: [
+              // Transfer
+              { name: 'Transferência', icon: 'other', type: 'TRANSFER' },
               // Income
               { name: 'Salário', icon: 'salary', type: 'INCOME' },
               { name: 'Freelance', icon: 'freelance', type: 'INCOME' },

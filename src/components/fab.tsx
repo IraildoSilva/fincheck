@@ -45,6 +45,16 @@ export function Fab() {
           </DropdownMenuItem>
 
           <DropdownMenuItem
+            className="gap-2 [&>svg]:size-8"
+            onSelect={() => {
+              openNewTransactionModal('TRANSFER')
+            }}
+          >
+            <CategoryIcon type="transfer" />
+            Nova Transferência
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
             onSelect={openNewAccountModal}
             className="gap-2 [&>svg]:size-8"
           >

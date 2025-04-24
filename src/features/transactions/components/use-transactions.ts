@@ -9,7 +9,7 @@ export type TransactionsFilters = {
   month: number
   year: number
   bankAccountId?: string
-  type?: 'INCOME' | 'EXPENSE'
+  type?: 'INCOME' | 'EXPENSE' | 'TRANSFER'
 }
 
 export function useTransactions() {
@@ -35,6 +35,8 @@ export function useTransactions() {
     isLoading: isInitialLoading,
     refetch: refetchTransactions,
   } = useGetTransactions(filters) //TODO Send filters in the request
+
+  console.log(transactions)
 
   const sortedTransactions = transactions?.sort((a, b) => {
     const ADate = new Date(a.date).getTime()

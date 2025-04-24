@@ -2,7 +2,7 @@
 
 import { formatCurrency } from '@/lib/format-currency'
 import { cn } from '@/lib/utils'
-import { Loader2 } from 'lucide-react'
+import { ArrowBigRight, Loader2 } from 'lucide-react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { useTransactions } from './use-transactions'
 import { MONTHS } from '../constants'
@@ -162,7 +162,11 @@ export function Transactions() {
                     <div className="flex items-center gap-3">
                       <CategoryIcon
                         type={
-                          transaction.type === 'INCOME' ? 'income' : 'expense'
+                          transaction.type === 'INCOME'
+                            ? 'income'
+                            : transaction.type === 'EXPENSE'
+                            ? 'expense'
+                            : 'transfer'
                         }
                         category={transaction.category?.icon}
                       />
@@ -172,15 +176,37 @@ export function Transactions() {
                           <strong className="font-semibold tracking-[-0.5px] leading-none">
                             {transaction.name}
                           </strong>
-                          <span
-                            className="text-xs px-2 rounded-md"
-                            style={{
-                              background: `${transaction.bankAccount.color}10`,
-                              color: `${transaction.bankAccount.color}`,
-                            }}
-                          >
-                            {transaction.bankAccount.name}
-                          </span>
+
+                          <div className="flex items-center">
+                            <span
+                              className="text-xs px-2 rounded-md"
+                              style={{
+                                background: `${transaction.bankAccount.color}10`,
+                                color: `${transaction.bankAccount.color}`,
+                              }}
+                            >
+                              {transaction.bankAccount.name}
+                            </span>
+
+                            {transaction.toBankAccount &&
+                              transaction.type === 'TRANSFER' && (
+                                <>
+                                  <ArrowBigRight
+                                    className="size-4 text-muted-foreground"
+                                    strokeWidth={1.5}
+                                  />
+                                  <span
+                                    className="text-xs px-2 rounded-md"
+                                    style={{
+                                      background: `${transaction.toBankAccount.color}10`,
+                                      color: `${transaction.toBankAccount.color}`,
+                                    }}
+                                  >
+                                    {transaction.toBankAccount.name}
+                                  </span>
+                                </>
+                              )}
+                          </div>
                         </div>
                         <div className="flex flex-col text-gray-600">
                           <span className="text-xs leading-1">
@@ -203,10 +229,15 @@ export function Transactions() {
                       className={cn(
                         'text-red-500 font-medium tracking-[-0.5px] text-nowrap',
                         !areValuesVisible && 'blur-sm',
-                        transaction.type === 'INCOME' && 'text-emerald-500'
+                        transaction.type === 'INCOME' && 'text-emerald-500',
+                        transaction.type === 'TRANSFER' && 'text-cyan-500'
                       )}
                     >
-                      {transaction.type === 'INCOME' ? '+ ' : '- '}
+                      {transaction.type === 'INCOME'
+                        ? '+ '
+                        : transaction.type === 'EXPENSE'
+                        ? '- '
+                        : ''}
                       {formatCurrency(transaction.value)}
                     </span>
                   </div>

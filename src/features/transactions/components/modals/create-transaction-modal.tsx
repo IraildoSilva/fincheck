@@ -45,6 +45,7 @@ const schema = z.object({
   name: z.string({ message: 'Informe o nome' }).min(1, 'Informe o nome'),
   categoryId: z.string().min(1, 'Informe uma categoria'),
   bankAccountId: z.string().min(1, 'Informe uma conta'),
+  toBankAccountId: z.string().min(1, 'Informe uma conta').optional(),
   date: z.date(),
 })
 
@@ -72,6 +73,8 @@ export function CreateTransactionModal() {
   const { mutateAsync, isPending } = useCreateTransaction()
 
   async function onSubmit(data: FormData) {
+    console.log({ data })
+
     await mutateAsync({
       json: {
         ...data,
@@ -91,7 +94,8 @@ export function CreateTransactionModal() {
     )
   }, [categoriesList, newTransactionType])
 
-  const isExpense = newTransactionType === 'EXPENSE'
+  const selectedBankAccountId = form.watch('bankAccountId')
+  const selectedToBankAccountId = form.watch('toBankAccountId')
 
   return (
     <ResponsiveModal
@@ -102,7 +106,9 @@ export function CreateTransactionModal() {
       <Card className="shadow-none border-none">
         <CardHeader>
           <CardTitle className="text-lg font-bold self-center">
-            {isExpense ? 'Nova Despesa' : 'Nova Receita'}
+            {newTransactionType === 'EXPENSE' && 'Nova Despesa'}
+            {newTransactionType === 'INCOME' && 'Nova Receita'}
+            {newTransactionType === 'TRANSFER' && 'Nova Transferência'}
           </CardTitle>
         </CardHeader>
 
@@ -111,7 +117,9 @@ export function CreateTransactionModal() {
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div>
                 <span className="text-muted-foreground text-xs">
-                  Valor da {isExpense ? 'despesa' : 'receita'}
+                  Valor da {newTransactionType === 'EXPENSE' && 'despesa'}
+                  {newTransactionType === 'INCOME' && 'receita'}
+                  {newTransactionType === 'TRANSFER' && 'transferência'}
                 </span>
 
                 <div className="flex items-center justify-center gap-2">
@@ -144,7 +152,11 @@ export function CreateTransactionModal() {
                           type="text"
                           // className="text-sm"
                           placeholder={
-                            isExpense ? 'Nome da Despesa' : 'Nome da Receita'
+                            newTransactionType === 'EXPENSE'
+                              ? 'Nome da Despesa'
+                              : newTransactionType === 'INCOME'
+                              ? 'Nome da Receita'
+                              : 'Nome da Transferência'
                           }
                         />
                       </FormControl>
@@ -166,15 +178,14 @@ export function CreateTransactionModal() {
                           <SelectTrigger>
                             <SelectValue
                               placeholder={
-                                isExpense ? (
-                                  <span className="text-muted-foreground">
-                                    Pagar com
-                                  </span>
-                                ) : (
-                                  <span className="text-muted-foreground">
-                                    Receber na conta
-                                  </span>
-                                )
+                                <span className="text-muted-foreground">
+                                  {newTransactionType === 'EXPENSE' &&
+                                    'Pagar com'}
+                                  {newTransactionType === 'INCOME' &&
+                                    'Receber na conta'}
+                                  {newTransactionType === 'TRANSFER' &&
+                                    'Enviar da conta'}
+                                </span>
                               }
                             />
                           </SelectTrigger>
@@ -182,7 +193,11 @@ export function CreateTransactionModal() {
 
                         <SelectContent>
                           {accounts?.map((account) => (
-                            <SelectItem key={account.id} value={account.id}>
+                            <SelectItem
+                              key={account.id}
+                              value={account.id}
+                              disabled={selectedToBankAccountId === account.id}
+                            >
                               {account.name}
                             </SelectItem>
                           ))}
@@ -193,6 +208,46 @@ export function CreateTransactionModal() {
                   )}
                 />
 
+                {newTransactionType === 'TRANSFER' && (
+                  <FormField
+                    control={form.control}
+                    name="toBankAccountId"
+                    render={({ field }) => (
+                      <FormItem>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue
+                                placeholder={
+                                  <span className="text-muted-foreground">
+                                    Receber na conta
+                                  </span>
+                                }
+                              />
+                            </SelectTrigger>
+                          </FormControl>
+
+                          <SelectContent>
+                            {accounts?.map((account) => (
+                              <SelectItem
+                                key={account.id}
+                                value={account.id}
+                                disabled={selectedBankAccountId === account.id}
+                              >
+                                {account.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+
                 <FormField
                   control={form.control}
                   name="categoryId"
@@ -201,13 +256,16 @@ export function CreateTransactionModal() {
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
+                        disabled={categories && categories?.length < 1}
                       >
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue
                               placeholder={
                                 <span className="text-muted-foreground">
-                                  Categoria
+                                  {categories && categories?.length < 1
+                                    ? 'Crie primeiro uma categoria'
+                                    : 'Categoria'}
                                 </span>
                               }
                             />
@@ -238,16 +296,14 @@ export function CreateTransactionModal() {
                             <Button
                               variant={'outline'}
                               className={cn(
-                                'w-full pl-3 text-left font-normal text-base md:text-sm',
+                                'w-full pl-3 text-left font-normal',
                                 !field.value && 'text-muted-foreground'
                               )}
                             >
                               {field.value ? (
                                 format(field.value, 'PPP')
                               ) : (
-                                <span className="text-base md:text-sm">
-                                  Pick a date
-                                </span>
+                                <span className="text-sm">Pick a date</span>
                               )}
                               <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                             </Button>
@@ -272,7 +328,7 @@ export function CreateTransactionModal() {
 
               <Button
                 type="submit"
-                className="mt-6 w-full text-base md:text-sm"
+                className="mt-6 w-full"
                 disabled={isPending}
               >
                 {isPending && <Loader2 className="size-4 animate-spin" />}

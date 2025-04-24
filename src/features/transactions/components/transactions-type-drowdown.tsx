@@ -8,8 +8,9 @@ import { IncomeIcon } from './transactions-icons/income-icon'
 import { ExpensesIcon } from './transactions-icons/expenses-icon'
 import { TransactionsIcon } from './transactions-icons/transactions-icon'
 import { ChevronDownIcon } from 'lucide-react'
+import { TransfersIcon } from './transactions-icons/transfer-icon'
 
-type TransactionType = 'INCOME' | 'EXPENSE' | undefined
+type TransactionType = 'INCOME' | 'EXPENSE' | 'TRANSFER' | undefined
 
 interface TransactionTypeDropdownProps {
   onSelect: (type: TransactionType) => void
@@ -26,11 +27,13 @@ export function TransactionTypeDropdown({
         <button className="flex items-center gap-2">
           {selectedType === 'INCOME' && <IncomeIcon />}
           {selectedType === 'EXPENSE' && <ExpensesIcon />}
+          {selectedType === 'TRANSFER' && <TransfersIcon />}
           {selectedType === undefined && <TransactionsIcon />}
 
           <span className="text-sm tracking-[-0.5px] font-medium">
             {selectedType === 'INCOME' && 'Receitas'}
             {selectedType === 'EXPENSE' && 'Despesas'}
+            {selectedType === 'TRANSFER' && 'Transferências'}
             {selectedType === undefined && 'Transações'}
           </span>
 
@@ -53,6 +56,14 @@ export function TransactionTypeDropdown({
           <ExpensesIcon />
           Despesas
         </DropdownMenuItem>
+        <DropdownMenuItem
+          onSelect={() => onSelect('TRANSFER')}
+          className="gap-2 cursor-pointer [&_svg]:size-6"
+        >
+          <TransfersIcon />
+          Transferências
+        </DropdownMenuItem>
+
         <DropdownMenuItem
           onSelect={() => onSelect(undefined)}
           className="gap-2 cursor-pointer [&_svg]:size-6"

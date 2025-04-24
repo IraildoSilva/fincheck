@@ -110,7 +110,9 @@ export function EditTransactionModal({
   }
 
   const categories = useMemo(() => {
-    return categoriesList?.filter(category => category.type === transaction?.type)
+    return categoriesList?.filter(
+      (category) => category.type === transaction?.type
+    )
   }, [categoriesList, transaction])
 
   const isExpense = transaction?.type === 'EXPENSE'
@@ -204,11 +206,11 @@ export function EditTransactionModal({
                             <SelectValue
                               placeholder={
                                 isExpense ? (
-                                  <span className="text-muted-foreground text-base md:text-sm">
+                                  <span className="text-muted-foreground ">
                                     Pagar com
                                   </span>
                                 ) : (
-                                  <span className="text-muted-foreground text-base md:text-sm">
+                                  <span className="text-muted-foreground ">
                                     Receber na conta
                                   </span>
                                 )
@@ -219,11 +221,7 @@ export function EditTransactionModal({
 
                         <SelectContent>
                           {accounts?.map((account) => (
-                            <SelectItem
-                              key={account.id}
-                              value={account.id}
-                              className="text-base md:text-sm"
-                            >
+                            <SelectItem key={account.id} value={account.id}>
                               {account.name}
                             </SelectItem>
                           ))}
@@ -248,7 +246,7 @@ export function EditTransactionModal({
                           <SelectTrigger>
                             <SelectValue
                               placeholder={
-                                <span className="text-muted-foreground text-base md:text-sm">
+                                <span className="text-muted-foreground">
                                   Categoria
                                 </span>
                               }
@@ -258,11 +256,7 @@ export function EditTransactionModal({
 
                         <SelectContent>
                           {categories?.map((category) => (
-                            <SelectItem
-                              key={category.id}
-                              value={category.id}
-                              className="text-base md:text-sm"
-                            >
+                            <SelectItem key={category.id} value={category.id}>
                               {category.name}
                             </SelectItem>
                           ))}
@@ -284,16 +278,14 @@ export function EditTransactionModal({
                             <Button
                               variant={'outline'}
                               className={cn(
-                                'w-full pl-3 text-left font-normal text-base md:text-sm',
+                                'w-full pl-3 text-left font-normal',
                                 !field.value && 'text-muted-foreground'
                               )}
                             >
                               {field.value ? (
                                 format(field.value, 'PPP')
                               ) : (
-                                <span className="text-base md:text-sm">
-                                  Pick a date
-                                </span>
+                                <span>Pick a date</span>
                               )}
                               <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                             </Button>
@@ -318,7 +310,7 @@ export function EditTransactionModal({
 
               <Button
                 type="submit"
-                className="mt-6 w-full text-base md:text-sm"
+                className="mt-6 w-full"
                 disabled={isPending}
               >
                 {isPending && <Loader2 className="size-4 animate-spin" />}
@@ -328,7 +320,7 @@ export function EditTransactionModal({
               <Button
                 variant={'secondary'}
                 type="button"
-                className="mt-2 w-full text-base md:text-sm"
+                className="mt-2 w-full"
                 onClick={handleOpenDeleteModal}
                 disabled={isPending}
               >
