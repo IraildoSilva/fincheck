@@ -128,7 +128,7 @@ export function CategoriesModal({ open, onClose }: CategoriesModalProps) {
             <div className="flex items-center justify-between">
               <div className="flex items-center justify-center gap-x-2">
                 <span className="text-sm">Filtrar por: </span>
-                <div className="w-36">
+                <div className="w-[152px]">
                   <Select
                     defaultValue={categoryFilter}
                     onValueChange={handleCategoryFilter}
