@@ -17,6 +17,11 @@ import { EditTransactionModal } from './modals/edit-transaction-modal'
 import { SummaryModal } from './modals/summary-modal'
 import { SummaryButton } from './summary-button'
 import { EmptyState } from './empty-state'
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from '@/components/ui/popover'
 
 export function Transactions() {
   const {
@@ -178,32 +183,91 @@ export function Transactions() {
                           </strong>
 
                           <div className="flex items-center">
-                            <span
-                              className="text-xs px-2 rounded-md"
-                              style={{
-                                background: `${transaction.bankAccount.color}10`,
-                                color: `${transaction.bankAccount.color}`,
-                              }}
-                            >
-                              {transaction.bankAccount.name}
-                            </span>
+                            {!transaction.toBankAccount && (
+                              <span
+                                className="text-xs px-2 rounded-md border shadow-md"
+                                style={{
+                                  background: `${transaction.bankAccount.color}10`,
+                                  color: `${transaction.bankAccount.color}`,
+                                  borderColor: `${transaction.bankAccount.color}20`,
+                                }}
+                              >
+                                {transaction.bankAccount.name}
+                              </span>
+                            )}
 
                             {transaction.toBankAccount &&
                               transaction.type === 'TRANSFER' && (
                                 <>
-                                  <ArrowBigRight
-                                    className="size-4 text-muted-foreground"
-                                    strokeWidth={1.5}
-                                  />
-                                  <span
-                                    className="text-xs px-2 rounded-md"
-                                    style={{
-                                      background: `${transaction.toBankAccount.color}10`,
-                                      color: `${transaction.toBankAccount.color}`,
-                                    }}
-                                  >
-                                    {transaction.toBankAccount.name}
-                                  </span>
+                                  {/* Mobile View */}
+                                  <Popover>
+                                    <PopoverTrigger
+                                      onClick={(event) =>
+                                        event.stopPropagation()
+                                      }
+                                      className="text-xs px-2 rounded-md bg-muted text-muted-foreground md:hidden border shadow-md"
+                                    >
+                                      2+
+                                    </PopoverTrigger>
+                                    <PopoverContent
+                                      side="top"
+                                      className="flex items-center justify-center w-auto p-2"
+                                    >
+                                      <span
+                                        className="text-xs px-2 rounded-md border shadow-md"
+                                        style={{
+                                          background: `${transaction.bankAccount.color}10`,
+                                          color: `${transaction.bankAccount.color}`,
+                                          borderColor: `${transaction.bankAccount.color}20`,
+                                        }}
+                                      >
+                                        {transaction.bankAccount.name}
+                                      </span>
+                                      <ArrowBigRight
+                                        className="size-4 text-muted-foreground"
+                                        strokeWidth={1.5}
+                                      />
+                                      <span
+                                        className="text-xs px-2 rounded-md border shadow-md"
+                                        style={{
+                                          background: `${transaction.toBankAccount.color}10`,
+                                          color: `${transaction.toBankAccount.color}`,
+                                          borderColor: `${transaction.bankAccount.color}20`,
+                                        }}
+                                      >
+                                        {transaction.toBankAccount.name}
+                                      </span>
+                                    </PopoverContent>
+                                  </Popover>
+
+                                  {/* Normal view */}
+                                  <div className="hidden md:flex">
+                                    <span
+                                      className="text-xs px-2 rounded-md border shadow-md"
+                                      style={{
+                                        background: `${transaction.bankAccount.color}10`,
+                                        color: `${transaction.bankAccount.color}`,
+                                        borderColor: `${transaction.toBankAccount.color}20`,
+                                      }}
+                                    >
+                                      {transaction.bankAccount.name}
+                                    </span>
+
+                                    <ArrowBigRight
+                                      className="size-4 text-muted-foreground"
+                                      strokeWidth={1.5}
+                                    />
+                                    <span
+                                      className="text-xs px-2 rounded-md border shadow-md"
+                                      style={{
+                                        background: `${transaction.toBankAccount.color}10`,
+                                        color: `${transaction.toBankAccount.color}`,
+                                        borderColor: `${transaction.toBankAccount.color}20`,
+                                      }}
+                                    >
+                                      {transaction.toBankAccount.name}
+                                    </span>
+                                  </div>
                                 </>
                               )}
                           </div>
