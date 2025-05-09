@@ -15,7 +15,7 @@ export function Fab() {
   const { openNewAccountModal, openNewTransactionModal } = useDashboard()
 
   return (
-    <div className="fixed bottom-3 right-3">
+    <div className="fixed bottom-3 right-3 z-10">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button className="w-12 h-12 rounded-full bg-foreground flex items-center justify-center text-background shadow-md shadow-zinc-900">

@@ -73,8 +73,6 @@ export function CreateTransactionModal() {
   const { mutateAsync, isPending } = useCreateTransaction()
 
   async function onSubmit(data: FormData) {
-    console.log({ data })
-
     await mutateAsync({
       json: {
         ...data,
@@ -303,7 +301,9 @@ export function CreateTransactionModal() {
                               {field.value ? (
                                 format(field.value, 'PPP')
                               ) : (
-                                <span className="text-base md:text-sm">Pick a date</span>
+                                <span className="text-base md:text-sm">
+                                  Pick a date
+                                </span>
                               )}
                               <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                             </Button>
