@@ -1,7 +1,7 @@
 import { client } from '@/lib/rpc'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { InferRequestType, InferResponseType } from 'hono'
-import { QUERY_KEYS } from '../constants'
+import { QUERY_KEYS, updateMessageByTransactionType } from '../constants'
 import { QUERY_KEYS as ACCOUNT_QUERY_KEY } from '@/features/bank-accounts/constants'
 import { toast } from 'sonner'
 
@@ -33,11 +33,7 @@ export function useUpdateTransaction() {
       queryClient.invalidateQueries({
         queryKey: ACCOUNT_QUERY_KEY.bankAccounts,
       })
-      toast.success(
-        transaction.type === 'EXPENSE'
-          ? 'Despesa editada com sucesso!'
-          : 'Receita editada com sucesso!'
-      )
+      toast.success(updateMessageByTransactionType[transaction.type])
     },
     onError: () => {
       toast.error('Erro ao editar transação!')
