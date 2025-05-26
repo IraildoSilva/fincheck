@@ -7,13 +7,18 @@ interface InputCurrencyProps {
   disabled?: boolean
 }
 
-export function InputCurrency({ onChange, value, disabled }: InputCurrencyProps) {
+export function InputCurrency({
+  onChange,
+  value,
+  disabled,
+}: InputCurrencyProps) {
   return (
     <div>
       <NumericFormat
         disabled={disabled}
         decimalSeparator=","
         thousandSeparator="."
+        decimalScale={2}
         defaultValue={value}
         onChange={(event) => onChange(event.target.value)}
         className={cn(

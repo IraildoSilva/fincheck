@@ -74,7 +74,7 @@ const app = new Hono()
     authMiddleware,
     async (c) => {
       const { bankAccountId } = c.req.valid('param')
-      const { color, name, initialBalance, type } = c.req.valid('json')
+      const { color, name, type } = c.req.valid('json')
       const userId = c.get('userId')
 
       const bankAccount = await prisma.bankAccount.update({
@@ -82,7 +82,6 @@ const app = new Hono()
         data: {
           color,
           name,
-          initialBalance,
           type,
         },
       })
