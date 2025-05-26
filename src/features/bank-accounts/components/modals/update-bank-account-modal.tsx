@@ -30,6 +30,7 @@ import { useCallback, useState } from 'react'
 import { useUpdateBankAccount } from '../../api/use-update-bank-account'
 import { useDeleteBankAccount } from '../../api/use-delete-bank-account'
 import { ConfirmDeleteModal } from '@/components/confirm-delete-modal'
+import { SliderState } from '@/app/(dashboard)/page'
 
 const schema = z.object({
   initialBalance: z.union([
@@ -45,7 +46,13 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>
 
-export function UpdateBankAccountModal() {
+interface UpdateBankAccountModalProps {
+  setSliderState: (prevState: SliderState) => void
+}
+
+export function UpdateBankAccountModal({
+  setSliderState,
+}: UpdateBankAccountModalProps) {
   const { isEditAccountModalOpen, closeEditAccountModal, accountBeingEdited } =
     useDashboard()
 
@@ -61,7 +68,7 @@ export function UpdateBankAccountModal() {
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
-  const { mutateAsync, isPending } = useUpdateBankAccount()
+  const { mutateAsync: updateAccount, isPending } = useUpdateBankAccount()
   const { mutateAsync: deleteAccount, isPending: isLoadingDelete } =
     useDeleteBankAccount()
 
@@ -72,7 +79,7 @@ export function UpdateBankAccountModal() {
   }
 
   async function onSubmit(data: FormData) {
-    await mutateAsync({
+    await updateAccount({
       json: {
         ...data,
         initialBalance: currencyStringToNumber(data.initialBalance),
@@ -82,6 +89,7 @@ export function UpdateBankAccountModal() {
       },
     })
 
+    setSliderState({ isBeginning: true, isEnd: false })
     closeEditAccountModal()
     form.reset()
   }

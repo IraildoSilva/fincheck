@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import { EyeClosed, EyeIcon, Loader2, PlusIcon } from 'lucide-react'
@@ -15,14 +15,21 @@ import { cn } from '@/lib/utils'
 import { useWindowWidth } from '@/hooks/use-window-width'
 import { formatCurrency } from '@/lib/format-currency'
 import { useDashboard } from '@/hooks/use-dashboard'
+import { SliderState } from '@/app/(dashboard)/page'
 
-export function BankAccounts() {
+interface BankAccountProps {
+  sliderState: SliderState
+  setSliderState: (prevState: SliderState) => void
+}
+
+export function BankAccounts({
+  setSliderState,
+  sliderState,
+}: BankAccountProps) {
   const windowWidth = useWindowWidth()
-  const { areValuesVisible, toggleValuesVisibility, openNewAccountModal } = useDashboard()
-  const [sliderState, setSliderState] = useState({
-    isBeginning: true,
-    isEnd: false,
-  })
+  const { areValuesVisible, toggleValuesVisibility, openNewAccountModal } =
+    useDashboard()
+
   const {
     accounts,
     isFetching,
