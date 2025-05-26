@@ -43,7 +43,7 @@ export function SummaryModal({
         </CardHeader>
 
         <CardContent>
-          <div className='text-center w-full flex items-center justify-center'>
+          <div className="text-center w-full flex items-center justify-center">
             <p className="w-[200px] mb-20 font-medium tracking-[-0.5px] text-muted-foreground">
               Resumo das suas transacões em{' '}
               <span className="text-foreground font-semibold">

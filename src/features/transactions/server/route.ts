@@ -83,7 +83,12 @@ const app = new Hono()
       transactions.push(...data)
     }
 
-    return c.json({ data: transactions })
+    const formattedTransactions = transactions.map((transaction) => ({
+      ...transaction,
+      value: Number(transaction.value),
+    }))
+
+    return c.json({ data: formattedTransactions })
   })
   .post(
     '/',
