@@ -3,6 +3,7 @@ import prisma from '@/lib/db'
 import { authMiddleware } from '@/lib/auth-middleware'
 import { zValidator } from '@hono/zod-validator'
 import { bankAccountDto, bankAccountIdSchema } from '../schemas'
+import { Decimal } from '@prisma/client/runtime/library'
 
 const app = new Hono()
   .get('/', authMiddleware, async (c) => {
@@ -28,23 +29,40 @@ const app = new Hono()
 
     const accountsWithCurrentBalance = bankAccounts.map(
       ({ transactionsFrom, transactionsTo, ...bankAccount }) => {
+        // const totalFrom = transactionsFrom.reduce((acc, tx) => {
+        //   if (tx.type === 'INCOME') return acc + tx.value
+        //   if (tx.type === 'EXPENSE') return acc - tx.value
+        //   if (tx.type === 'TRANSFER') return acc - tx.value // Transferência saindo da conta
+        //   return acc
+        // }, 0)
+
+        // const totalTo = transactionsTo.reduce((acc, tx) => {
+        //   if (tx.type === 'TRANSFER') return acc + tx.value // Transferência entrando na conta
+        //   return acc
+        // }, 0)
+
+        // const currentBalance = bankAccount.initialBalance + totalFrom + totalTo
+
         const totalFrom = transactionsFrom.reduce((acc, tx) => {
-          if (tx.type === 'INCOME') return acc + tx.value
-          if (tx.type === 'EXPENSE') return acc - tx.value
-          if (tx.type === 'TRANSFER') return acc - tx.value // Transferência saindo da conta
+          if (tx.type === 'INCOME') return acc.plus(tx.value)
+          if (tx.type === 'EXPENSE') return acc.minus(tx.value)
+          if (tx.type === 'TRANSFER') return acc.minus(tx.value)
           return acc
-        }, 0)
+        }, new Decimal(0))
 
         const totalTo = transactionsTo.reduce((acc, tx) => {
-          if (tx.type === 'TRANSFER') return acc + tx.value // Transferência entrando na conta
+          if (tx.type === 'TRANSFER') return acc.plus(tx.value)
           return acc
-        }, 0)
+        }, new Decimal(0))
 
-        const currentBalance = bankAccount.initialBalance + totalFrom + totalTo
+        const currentBalance = bankAccount.initialBalance
+          .plus(totalFrom)
+          .plus(totalTo)
 
         return {
           ...bankAccount,
-          currentBalance,
+          initialBalance: Number(bankAccount.initialBalance),
+          currentBalance: Number(currentBalance),
         }
       }
     )
@@ -74,7 +92,7 @@ const app = new Hono()
     authMiddleware,
     async (c) => {
       const { bankAccountId } = c.req.valid('param')
-      const { color, name, initialBalance, type } = c.req.valid('json')
+      const { color, name, type } = c.req.valid('json')
       const userId = c.get('userId')
 
       const bankAccount = await prisma.bankAccount.update({
@@ -82,7 +100,6 @@ const app = new Hono()
         data: {
           color,
           name,
-          initialBalance,
           type,
         },
       })
